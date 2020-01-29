@@ -37,16 +37,14 @@ export default {
             "/" +
             this.requestOptions.id;
         }
-        this.requestOptions.data = this.transformDataType(
-          this.requestOptions.data
-        );
-        if (this.requestOptions.data) {
-          this.put(this.requestOptions)
+        let request = {};
+        _.assign(request, this.requestOptions);
+        request.data = this.transformDataType(request.data);
+        if (request.data) {
+          this.put(request)
             .then(res => {
-              if (
-                this.issetAndNotEmptyString(this.requestOptions, "responseAttr")
-              ) {
-                this.row = res[this.requestOptions.responseAttr];
+              if (this.issetAndNotEmptyString(request, "responseAttr")) {
+                this.row = res[request.responseAttr];
               } else {
                 this.row = res.payload;
               }

@@ -16,7 +16,7 @@ export default {
           .catch(res => {
             this.stopLoading();
             this.handelResponseError(res);
-            reject(res);
+            reject(res.response.data);
           });
       });
     },
@@ -33,7 +33,7 @@ export default {
           .catch(res => {
             this.stopLoading();
             this.handelResponseError(res);
-            reject(res);
+            reject(res.response.data);
           });
       });
     },
@@ -50,7 +50,7 @@ export default {
           .catch(res => {
             this.stopLoading();
             this.handelResponseError(res);
-            reject(res);
+            reject(res.response.data);
           });
       });
     },
@@ -67,17 +67,16 @@ export default {
           .catch(res => {
             this.stopLoading();
             this.handelResponseError(res);
-            reject(res);
+            reject(res.response.data);
           });
       });
     },
     handelResponseError(res) {
       if (res.response && res.response.data) {
-        this.response = res.response.data;
-        if (this.response.errors === null) {
-          this.danger(this.response.message);
-        } else if (this.response.errors.length === 0) {
-          this.danger(this.response.message);
+        if (res.response.data.errors === null) {
+          this.danger(res.response.data.message);
+        } else if (res.response.data.errors.length === 0) {
+          this.danger(res.response.data.message);
         }
       }
     }

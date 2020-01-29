@@ -27,6 +27,6 @@
 </template>
 <script>
 export default {
-  props: ["input", "error"]
+  props: ["input", "error"],
 };
 </script>

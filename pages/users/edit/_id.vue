@@ -1,9 +1,9 @@
 <template>
   <div>
     <bread :breadCrumb="breadCrumb"/>
-    <page-head :pageHead="pageHead"/>
+    <page-head :pageHead="pageHead" />
     <div>
-      <form @submit.prevent="storeData" name="createfolder">
+      <form @submit.prevent="updateData">
         <user-form :inputs="requestOptions.data" :response="response"/>
         <submit-button/>
         <reset-button/>
@@ -16,15 +16,16 @@
   import User from "@/objects/admin/forms/users";
   import SubmitButton from "@/components/inputs/submit";
   import ResetButton from "@/components/inputs/reset";
-  //mixin
-  import Store from "@/mixin/actions/store";
+  /////mixin
+  import Show from "@/mixin/actions/show";
+  import Update from "@/mixin/actions/update";
   import Response from "@/mixin/objects/normalResponse";
   import BreadCrumb from "@/mixin/breadcrumb"
   import Bread from "@/components/admin/common/breadCrumb"
   import pageHead from "@/components/admin/common/pageHead";
 
   export default {
-    mixins: [Store, Response, BreadCrumb],
+    mixins: [Show, Update, Response, BreadCrumb],
     components: {
       pageHead,
       UserForm,
@@ -34,12 +35,8 @@
     },
     data() {
       return {
-        pageHead: {
-          pageTitle: "Create User"
-        },
-        moduleName: "users",
-        requestOptions: {
-          data: User()
+        pageHead :{
+          pageTitle : "Update User"
         },
         appendToBreadCrumb: [
           {
@@ -48,21 +45,30 @@
             icon: "<i class='fa fa-users'></i>"
           },
           {
-            label: " Create",
-            icon: "<i class='fa fa-plus'></i>"
+            label: " Update",
+            icon: "<i class='fa fa-user'></i>"
           }
-        ]
+        ],
+        moduleName: "users",
+        requestOptions: {
+          id: this.$route.params.id,
+          data: User()
+        }
       };
     },
+    mounted() {
+      this.find().then(res => {
+        this.response = res;
+        this.setValuesToObject(this.requestOptions.data, res.payload);
+      });
+    },
     methods: {
-      storeData() {
-        this.store()
-          .then(res => {
-            this.$router.push("/" + this.moduleName);
-          })
-          .catch((res) => {
-            this.response = res
-          });
+      updateData() {
+        this.update().then(res => {
+          this.$router.push("/" + this.moduleName);
+        }).catch((res) => {
+          this.response = res
+        });
       }
     }
   };

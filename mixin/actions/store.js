@@ -31,16 +31,14 @@ export default {
         if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url = this.adminUrl + "/" + this.moduleName;
         }
-        this.requestOptions.data = this.transformDataType(
-          this.requestOptions.data
-        );
-        if (this.requestOptions.data) {
-          this.post(this.requestOptions)
+        let request = {};
+        _.assign(request, this.requestOptions);
+        request.data = this.transformDataType(request.data);
+        if (request.data) {
+          this.post(request)
             .then(res => {
-              if (
-                this.issetAndNotEmptyString(this.requestOptions, "responseAttr")
-              ) {
-                this.row = res[this.requestOptions.responseAttr];
+              if (this.issetAndNotEmptyString(request, "responseAttr")) {
+                this.row = res[request.responseAttr];
               } else {
                 this.row = res.payload;
               }

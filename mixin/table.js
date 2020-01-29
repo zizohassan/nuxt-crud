@@ -40,7 +40,7 @@ export default {
           }
         },
         click: val => {
-          this.$router.push(this.moduleName + "/" + val.id);
+          this.$router.push(this.moduleName + "/edit/" + val.id);
         }
       },
       deleteAction: {
