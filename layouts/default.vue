@@ -17,7 +17,6 @@
         </div>
       </div>
     </nav>
-
     <section class="main-content columns">
       <aside class="column is-2 section">
         <p class="menu-label is-hidden-touch">
@@ -34,6 +33,7 @@
       </aside>
 
       <div class="container column is-10">
+        <BreadCrumb />
         <nuxt />
       </div>
     </section>
@@ -41,7 +41,12 @@
 </template>
 
 <script>
+import BreadCrumb from "../components/admin/BreadCrumb/BreadCrumb";
+
 export default {
+  components: {
+    BreadCrumb
+  },
   data() {
     return {
       items: [
