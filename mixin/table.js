@@ -13,6 +13,7 @@ export default ({
     defaultProps() {
       return {
         headers: this.headers,
+        moduleName: this.moduleName,
         response: this.response,
         tableOption: this.tableOption,
         sorting: this.sorting,

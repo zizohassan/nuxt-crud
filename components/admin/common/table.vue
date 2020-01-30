@@ -107,7 +107,7 @@
                     indexHeader == 0)
               "
             >
-              <span @click="this.editAction(row.id)">Edit</span>
+              <span @click="editAction(row.id)">Edit</span>
             </div>
           </td>
         </tr>
@@ -143,8 +143,8 @@ export default {
     }
   },
   methods: {
-    editAction: id => {
-      this.$router.push(this.moduleName + "/edit/" + id);
+    editAction(id) {
+      this.$router.push(this.defaultProps.moduleName + "/edit/" + id);
     },
     deleteAction: (row, header, indexOfRow) => {
       this.$buefy.dialog.confirm({
