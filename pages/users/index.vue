@@ -17,7 +17,7 @@ import moment from "moment";
 import pageHead from "@/components/admin/common/pageHead";
 
 export default {
-  mixins: [MixinTable],
+  mixins: [MixinTable({ tableOption: { actionsColumnName: "email" } })],
   components: {
     Table,
     pageHead
@@ -40,12 +40,6 @@ export default {
         },
         pageTitle: "Users"
       },
-      append: [
-        {
-          label: " Users",
-          icon: "<i class='fa fa-users'></i>"
-        }
-      ],
       moduleName: "users",
       headers: [
         {

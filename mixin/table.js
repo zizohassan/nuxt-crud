@@ -3,7 +3,11 @@ import Request from "./requests";
 import Delete from "./actions/delete";
 import PaginationResponse from "./objects/paginateResponse";
 
-export default {
+export default ({
+  withEdit = true,
+  withDelete = true,
+  tableOption = {}
+} = {}) => ({
   mixins: [Notification, Request, Delete, PaginationResponse],
   computed: {
     defaultProps() {
@@ -25,7 +29,8 @@ export default {
         loadingTable: false,
         sortKey: "id",
         sortValue: "desc",
-        filterPosition: "inside-table" /// inside-table or outside-table
+        filterPosition: "inside-table", /// inside-table or outside-table
+        ...tableOption
       },
       /////default actions
       moduleName: "",
@@ -35,9 +40,7 @@ export default {
         title: "Edit",
         render: {
           type: "html",
-          action: val => {
-            return `<span><i class="fa fa-edit" ></i> </span>`;
-          }
+          action: val => `<span><i class="fa fa-edit" ></i> </span>`
         },
         click: val => {
           this.$router.push(this.moduleName + "/edit/" + val.id);
@@ -49,8 +52,15 @@ export default {
         title: "Delete",
         render: {
           type: "html",
-          action: val => {
-            return `<span><i class="fa fa-trash" ></i> </span>`;
+          action: val => `<span><i class="fa fa-trash" ></i> </span>`
+        },
+        quickEditAction: {
+          name: "id",
+          sort: false,
+          title: "Delete",
+          render: {
+            type: "html",
+            action: val => `<span><i class="fa fa-trash" ></i> </span>`
           }
         },
         click: (row, header, indexOfRow) => {
@@ -163,4 +173,4 @@ export default {
       this.ids = ids;
     }
   }
-};
+});
