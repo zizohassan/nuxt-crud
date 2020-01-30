@@ -1,9 +1,10 @@
 import webpack from "webpack";
+require("dotenv").config();
 
 export default {
   env: {
-    adminUrl: process.env.ADMIN_URL || "http://127.0.0.1:9090/admin",
-    notLoginUrl: process.env.NOT_LOGIN_URL || "http://127.0.0.1:9090/admin"
+    adminUrl: process.env.ADMIN_URL,
+    notLoginUrl: process.env.NOT_LOGIN_URL
   },
   mode: "spa",
   /*
@@ -33,11 +34,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/switch"],
+  plugins: [],
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [],
+  buildModules: ["@nuxtjs/dotenv"],
   /*
    ** Nuxt.js modules
    */
