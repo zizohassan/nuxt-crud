@@ -13,11 +13,12 @@
 </template>
 <script>
   import Table from "@/components/admin/common/table";
-  import MixinTable from "@/mixin/table";
   import moment from "moment";
-  import BreadCrumb from "@/mixin/breadcrumb"
-  import Bread from "@/components/admin/common/breadCrumb"
   import pageHead from "@/components/admin/common/pageHead";
+  import Bread from "@/components/admin/common/breadCrumb"
+
+  import BreadCrumb from "@/mixin/breadcrumb"
+  import MixinTable from "@/mixin/table";
 
   export default {
     mixins: [MixinTable, BreadCrumb],
