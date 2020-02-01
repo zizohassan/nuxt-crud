@@ -1,14 +1,9 @@
 <template>
   <div>
-    <template
-      v-if="defaultProps.tableOption.filterPosition === 'outside-table'"
-    >
-      <span
-        v-for="(header, index) in defaultProps.headers"
-        :key="header.name + '_filter_' + index"
-      >
+    <template v-if="defaultProps.tableOption.filterPosition === 'outside-table'">
+      <span v-for="(header, index) in defaultProps.headers" :key="header.name + '_filter_' + index">
         <template v-if="header.filter !== undefined">
-          <filters :header="header"/>
+          <filters :header="header" />
         </template>
       </span>
       <span
@@ -16,32 +11,29 @@
         :key="header.name + '_custom_filter_' + index"
       >
         <template v-if="filter.filter !== undefined">
-          <filters :header="filter"/>
+          <filters :header="filter" />
         </template>
       </span>
       <slot name="customFilter"></slot>
     </template>
     <table>
       <thead>
-      <tr>
-        <td>
-          <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
-        </td>
-        <th
-          v-for="(header, index) in defaultProps.headers"
-          :key="header.name + '_' + index"
-        >
-          {{ header.title }}
-          <template v-if="header.sort">
-            <a
-              href=""
-              @click.prevent="defaultProps.sorting(header.name)"
-              :class="
+        <tr>
+          <td>
+            <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
+          </td>
+          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
+            {{ header.title }}
+            <template v-if="header.sort">
+              <a
+                href
+                @click.prevent="defaultProps.sorting(header.name)"
+                :class="
                   defaultProps.tableOption.sortKey === header.name
                     ? 'active'
                     : ''
                 "
-            >
+              >
                 <span
                   v-if="
                     defaultProps.tableOption.sortKey === header.name &&
@@ -50,102 +42,100 @@
                 >
                   <i class="fa fa-arrow-circle-down"></i>
                 </span>
-              <span v-else>
+                <span v-else>
                   <i class="fa fa-arrow-circle-up"></i>
                 </span>
-            </a>
-          </template>
-          <template
-            v-if="
+              </a>
+            </template>
+            <template
+              v-if="
                 header.filter !== undefined &&
                   defaultProps.tableOption.filterPosition === 'inside-table'
               "
-          >
-            <filters :header="header"/>
-          </template>
-        </th>
-      </tr>
+            >
+              <filters :header="header" />
+            </template>
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr
-        v-for="(column, indexColumn) in defaultProps.response.payload.records"
-        :key="column.id"
-      >
-        <td>
-          <b-checkbox
-            v-model="ids"
-            @input="removeCheck"
-            :native-value="column.id"
-          ></b-checkbox>
-        </td>
-        <td
-          v-for="(header, indexHeader) in defaultProps.headers"
-          :key="header.name + '_' + indexColumn + '_' + indexHeader"
-        >
-          <template v-if="column[header.name]">
-            <template v-if="header.click !== undefined">
-              <a
-                href=""
-                @click.prevent="
-                    header.click(column, header, indexColumn, indexHeader)
+        <tr v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+          <!-- select box -->
+          <td>
+            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
+          </td>
+          <!-- end select box -->
+          <td
+            v-for="(header, indexHeader) in defaultProps.headers"
+            :key="header.name + '_' + indexRow + '_' + indexHeader"
+          >
+            <template v-if="row[header.name]">
+              <template v-if="header.click !== undefined">
+                <a
+                  href
+                  @click.prevent="
+                    header.click(row, header, indexRow, indexHeader)
                   "
-              >
-                <render :header="header" :column="column"/>
-              </a>
+                >
+                  <render :header="header" :column="row" />
+                </a>
+              </template>
+              <template v-else>
+                <render :header="header" :column="row" />
+              </template>
             </template>
-            <template v-else>
-              <render :header="header" :column="column"/>
-            </template>
-          </template>
-        </td>
-      </tr>
+            <actions :header="header" :defaultProps="defaultProps" :index="indexHeader" :row="row" />
+          </td>
+        </tr>
       </tbody>
     </table>
     <Pagination :response="defaultProps.response" @changePage="defaultProps.changePage" />
   </div>
 </template>
 <script>
-  import Render from "./render";
-  import Filters from "./filters";
-  import Pagination from "./pagination";
+import Render from "./table/render";
+import Filters from "./filters";
+import Pagination from "./pagination";
+import Actions from "./table/actionsBtns";
 
-  export default {
-    components: {
-      Render,
-      Filters,
-      Pagination
-    },
-    props: ["defaultProps"],
-    data() {
-      return {
-        selectAllIds: false,
-        ids: []
-      };
-    },
-    watch: {
-      ids(val) {
-        this.defaultProps.setIds(val);
+export default {
+  components: {
+    Render,
+    Filters,
+    Pagination,
+    Actions
+  },
+  props: ["defaultProps"],
+  data() {
+    return {
+      selectAllIds: false,
+      ids: []
+    };
+  },
+  watch: {
+    ids(val) {
+      this.defaultProps.setIds(val);
+    }
+  },
+  methods: {
+    removeCheck() {
+      if (this.ids.length === 0) {
+        this.selectAllIds = false;
       }
     },
-    methods: {
-      removeCheck() {
-        if (this.ids.length === 0) {
-          this.selectAllIds = false;
-        }
-      },
-      selectAll() {
-        this.ids = [];
-        if (this.selectAllIds) {
-          _.forEach(
-            this.defaultProps.response.payload.records,
-            (value, index) => {
-              this.ids[index] = this.defaultProps.response.payload.records[
-                index
-                ].id;
-            }
-          );
-        }
+    selectAll() {
+      this.ids = [];
+      if (this.selectAllIds) {
+        _.forEach(
+          this.defaultProps.response.payload.records,
+          (value, index) => {
+            this.ids[index] = this.defaultProps.response.payload.records[
+              index
+            ].id;
+          }
+        );
       }
     }
-  };
+  }
+};
 </script>

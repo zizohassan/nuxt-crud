@@ -1,4 +1,4 @@
-const formSettings = JSON.stringify([
+const formSettings = [
   {
     label: "Name",
     name: "name",
@@ -79,6 +79,6 @@ const formSettings = JSON.stringify([
     submitStore: false,
     submitUpdate: false
   }
-]);
+];
 
-export default () => JSON.parse(formSettings);
+export default () => _.cloneDeep(formSettings);
