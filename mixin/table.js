@@ -18,7 +18,10 @@ export default ({
         tableOption: this.tableOption,
         sorting: this.sorting,
         changePage: this.changePage,
-        setIds: this.SetIds
+        setIds: this.SetIds,
+        methods: {
+          deleteRow: this.deleteRow
+        }
       };
     }
   },
@@ -40,54 +43,6 @@ export default ({
       },
       /////default actions
       moduleName: "",
-      editAction: {
-        name: "id",
-        sort: false,
-        title: "Edit",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-edit" ></i> </span>`
-        },
-        click: val => {
-          this.$router.push(this.moduleName + "/edit/" + val.id);
-        }
-      },
-      deleteAction: {
-        name: "id",
-        sort: false,
-        title: "Delete",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-trash" ></i> </span>`
-        },
-        click: (row, header, indexOfRow) => {
-          this.$buefy.dialog.confirm({
-            title: "Are You Sure you want to delete !",
-            message:
-              "are you sure you want to delete ?  you can not restore this action",
-            confirmText: "Delete",
-            type: "is-danger",
-            hasIcon: true,
-            onConfirm: () => {
-              let options = {
-                id: row.id,
-                index: indexOfRow,
-                list: this.response.payload.records
-              };
-              this.deleteRow(options);
-            }
-          });
-        }
-      },
-      quickEditAction: {
-        name: "id",
-        sort: false,
-        title: "Delete",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-trash" ></i> </span>`
-        }
-      },
       ///index
       headers: [],
       ids: [],

@@ -30,7 +30,6 @@ export default {
   },
   mounted() {
     this.index();
-    this.headers.push(this.editAction, this.deleteAction);
   },
   methods: {
     activeAll() {

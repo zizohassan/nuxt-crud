@@ -40,7 +40,10 @@ export default {
               this.issetAndNotNull(this.requestOptions, "index") &&
               this.issetAndNotEmptyArray(this.requestOptions, "list")
             ) {
-              this.$delete(this.requestOptions.list, this.requestOptions.index);
+              let index = this.requestOptions.list.findIndex(
+                item => item.id == this.requestOptions.id
+              );
+              this.$delete(this.requestOptions.list, index);
             }
             resolve(res);
           })

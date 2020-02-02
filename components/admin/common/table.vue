@@ -1,7 +1,12 @@
 <template>
   <div>
-    <template v-if="defaultProps.tableOption.filterPosition === 'outside-table'">
-      <span v-for="(header, index) in defaultProps.headers" :key="header.name + '_filter_' + index">
+    <template
+      v-if="defaultProps.tableOption.filterPosition === 'outside-table'"
+    >
+      <span
+        v-for="(header, index) in defaultProps.headers"
+        :key="header.name + '_filter_' + index"
+      >
         <template v-if="header.filter !== undefined">
           <filters :header="header" />
         </template>
@@ -22,7 +27,10 @@
           <td>
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
-          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
+          <th
+            v-for="(header, index) in defaultProps.headers"
+            :key="header.name + '_' + index"
+          >
             {{ header.title }}
             <template v-if="header.sort">
               <a
@@ -59,10 +67,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+        <tr
+          v-for="(row, indexRow) in defaultProps.response.payload.records"
+          :key="row.id"
+        >
           <!-- select box -->
           <td>
-            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
+            <b-checkbox
+              v-model="ids"
+              @input="removeCheck"
+              :native-value="row.id"
+            ></b-checkbox>
           </td>
           <!-- end select box -->
           <td
@@ -84,12 +99,20 @@
                 <render :header="header" :column="row" />
               </template>
             </template>
-            <actions :header="header" :defaultProps="defaultProps" :index="indexHeader" :row="row" />
+            <actions
+              :header="header"
+              :defaultProps="defaultProps"
+              :index="indexHeader"
+              :row="row"
+            />
           </td>
         </tr>
       </tbody>
     </table>
-    <Pagination :response="defaultProps.response" @changePage="defaultProps.changePage" />
+    <Pagination
+      :response="defaultProps.response"
+      @changePage="defaultProps.changePage"
+    />
   </div>
 </template>
 <script>
