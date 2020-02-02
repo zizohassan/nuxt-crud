@@ -45,7 +45,11 @@ export default {
       alert("quick edit");
     },
     activeAction(id) {
-      alert("active action");
+      let requestOption = {
+        url:
+          process.env.adminUrl + this.defaultProps.moduleName + "/active/" + id
+      };
+      this.get(requestOption);
     },
     deleteAction: (row, header, indexOfRow) => {
       this.$buefy.dialog.confirm({
