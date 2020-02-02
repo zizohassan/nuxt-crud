@@ -23,38 +23,7 @@
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
           <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
-            {{ header.title }}
-            <template v-if="header.sort">
-              <a
-                href
-                @click.prevent="defaultProps.sorting(header.name)"
-                :class="
-                  defaultProps.tableOption.sortKey === header.name
-                    ? 'active'
-                    : ''
-                "
-              >
-                <span
-                  v-if="
-                    defaultProps.tableOption.sortKey === header.name &&
-                      defaultProps.tableOption.sortValue === 'asc'
-                  "
-                >
-                  <i class="fa fa-arrow-circle-down"></i>
-                </span>
-                <span v-else>
-                  <i class="fa fa-arrow-circle-up"></i>
-                </span>
-              </a>
-            </template>
-            <template
-              v-if="
-                header.filter !== undefined &&
-                  defaultProps.tableOption.filterPosition === 'inside-table'
-              "
-            >
-              <filters :header="header" />
-            </template>
+            <headers :defaultProps="defaultProps" :header="header" />
           </th>
         </tr>
       </thead>
@@ -105,6 +74,7 @@
 </template>
 <script>
 import Render from "./table/render";
+import Headers from "./table/headers";
 import Filters from "./filters";
 import Pagination from "./pagination";
 import Actions from "./table/actionsBtns";
@@ -114,7 +84,8 @@ export default {
     Render,
     Filters,
     Pagination,
-    Actions
+    Actions,
+    Headers
   },
   props: ["defaultProps"],
   data() {

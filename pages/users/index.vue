@@ -2,6 +2,7 @@
   <div>
     <page-head :pageHead="pageHead" />
     <a href @click.prevent="activeAll">Active All</a>
+
     <Table :defaultProps="defaultProps">
       <template v-slot:quickEdit="{ inputs }">
         <form @submit.prevent="quickEditDoneEdting">
@@ -11,6 +12,7 @@
         </form>
       </template>
     </Table>
+
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->
     <!--      <template v-slot:customFilter>-->
