@@ -21,7 +21,6 @@ export default ({
         sorting: this.sorting,
         changePage: this.changePage,
         setIds: this.SetIds,
-
         methods: {
           deleteRow: this.deleteRow,
           setQuickEditRow: this.setQuickEditRow

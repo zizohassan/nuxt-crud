@@ -7,35 +7,24 @@
           (!defaultProps.tableOption.actionsColumnName && index == 0)
       "
     >
-      <a
-        v-if="defaultProps.tableOption.editBtn"
-        @click.prevent="editAction(row.id)"
-        >Edit</a
-      >
+      <a v-if="defaultProps.tableOption.editBtn" @click.prevent="editAction(row.id)">Edit</a>
       |
       <a
         v-if="defaultProps.tableOption.deleteBtn"
-        @click.prevent="deleteAction(row, header)"
-        >Delete</a
-      >
+        @click.prevent="deleteAction(row , rowIndex)"
+      >Delete</a>
       |
       <a
         v-if="defaultProps.tableOption.qeditBtn"
         @click.prevent="qeditAction(row)"
-        >Quick Edit</a
-      >
+      >Quick Edit</a>
       |
-      <a
-        v-if="defaultProps.tableOption.trashBtn"
-        @click.prevent="trashAction(row.id)"
-        >Trash</a
-      >
+      <a v-if="defaultProps.tableOption.trashBtn" @click.prevent="trashAction(row.id)">Trash</a>
       |
       <a
         v-if="defaultProps.tableOption.activeBtn"
         @click.prevent="activeAction(row.id)"
-        >Active</a
-      >
+      >Active</a>
     </div>
     <!--- end handel action handel --->
   </div>
@@ -45,7 +34,7 @@ import Request from "~/mixin/requests";
 
 export default {
   mixins: [Request],
-  props: ["defaultProps", "header", "index", "row"],
+  props: ["defaultProps", "header", "index", "row", "rowIndex"],
   methods: {
     editAction(id) {
       this.$router.push(this.defaultProps.moduleName + "/edit/" + id);
@@ -69,7 +58,7 @@ export default {
       };
       this.get(requestOption);
     },
-    deleteAction(row, header) {
+    deleteAction(row, rowIndex) {
       this.$buefy.dialog.confirm({
         title: "Are You Sure you want to delete !",
         message:
@@ -80,6 +69,7 @@ export default {
         onConfirm: () => {
           let options = {
             id: row.id,
+            index: rowIndex,
             list: this.defaultProps.response.payload.records
           };
           this.defaultProps.methods.deleteRow(options);
