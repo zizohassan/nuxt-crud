@@ -17,7 +17,8 @@ const formSettings = [
     storeType: "string",
     submitStore: true,
     submitUpdate: true,
-    placeholder: "Enter your email"
+    placeholder: "Enter your email",
+    quick: true
   },
   {
     label: "Password",
@@ -44,7 +45,8 @@ const formSettings = [
     options: [
       { text: "Active", value: 2 },
       { text: "Block", value: 1 }
-    ]
+    ],
+    quick: true
   },
   {
     label: "Role",

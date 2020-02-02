@@ -1,14 +1,16 @@
 import Notification from "./notifiaction";
 import Request from "./requests";
 import Delete from "./actions/delete";
+import Update from "./actions/update";
 import PaginationResponse from "./objects/paginateResponse";
 
 export default ({
   withEdit = true,
+  createEditFormInputs = () => [],
   withDelete = true,
   tableOption = {}
 } = {}) => ({
-  mixins: [Notification, Request, Delete, PaginationResponse],
+  mixins: [Notification, Request, Delete, Update, PaginationResponse],
   computed: {
     defaultProps() {
       return {
@@ -19,9 +21,13 @@ export default ({
         sorting: this.sorting,
         changePage: this.changePage,
         setIds: this.SetIds,
+
         methods: {
-          deleteRow: this.deleteRow
-        }
+          deleteRow: this.deleteRow,
+          setQuickEditRow: this.setQuickEditRow
+        },
+        quickEditRow: this.quickEditRow,
+        quickEditRequestOptions: this.quickEditRequestOptions
       };
     }
   },
@@ -47,7 +53,12 @@ export default ({
       headers: [],
       ids: [],
       customFilter: [],
-      queries: {}
+      queries: {},
+      quickEditRow: -1,
+      quickEditRequestOptions: {
+        id: 0,
+        data: createEditFormInputs()
+      }
     };
   },
   methods: {
@@ -132,6 +143,28 @@ export default ({
     },
     SetIds(ids) {
       this.ids = ids;
+    },
+    setQuickEditRow(row) {
+      this.quickEditRow = row;
+    },
+    quickEditDone(index) {
+      this.setQuickEditRow({});
+    },
+    quickEditDoneEdting(e) {
+      this.update(this.quickEditRequestOptions).then(() => {
+        this.requestOptions.data.forEach(e => {
+          this.quickEditRow[e.name] = e.vModel;
+        });
+        this.quickEditDone();
+      });
+    }
+  },
+  watch: {
+    quickEditRow(row) {
+      this.quickEditRequestOptions.data.forEach(element => {
+        element.vModel = row[element.name];
+      });
+      this.quickEditRequestOptions.id = row.id;
     }
   }
 });

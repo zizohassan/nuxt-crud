@@ -66,11 +66,11 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr
-          v-for="(row, indexRow) in defaultProps.response.payload.records"
-          :key="row.id"
-        >
+      <tbody
+        v-for="(row, indexRow) in defaultProps.response.payload.records"
+        :key="row.id"
+      >
+        <tr>
           <!-- select box -->
           <td>
             <b-checkbox
@@ -99,12 +99,20 @@
                 <render :header="header" :column="row" />
               </template>
             </template>
-            <actions
+            <Actions
               :header="header"
               :defaultProps="defaultProps"
               :index="indexHeader"
               :row="row"
             />
+          </td>
+        </tr>
+        <tr v-if="row.id === defaultProps.quickEditRow.id" class="quickEdit">
+          <td :colspan="Object.keys(row).length">
+            <slot
+              name="quickEdit"
+              :inputs="defaultProps.quickEditRequestOptions.data"
+            ></slot>
           </td>
         </tr>
       </tbody>
@@ -162,3 +170,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.quickEdit {
+  height: 50px;
+  /* padding: 20px; */
+}
+</style>

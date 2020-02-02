@@ -21,7 +21,7 @@
       |
       <a
         v-if="defaultProps.tableOption.qeditBtn"
-        @click.prevent="qeditAction(row.id)"
+        @click.prevent="qeditAction(row)"
         >Quick Edit</a
       >
       |
@@ -57,8 +57,10 @@ export default {
       };
       this.get(requestOption);
     },
-    qeditAction(id) {
-      alert("quick edit");
+    qeditAction(quickEditRow) {
+      this.defaultProps.methods.setQuickEditRow(quickEditRow);
+      // console.log(this.defaultProps.methods.setQuickEditRow);
+      // alert("quick edit");
     },
     activeAction(id) {
       alert("active action");
