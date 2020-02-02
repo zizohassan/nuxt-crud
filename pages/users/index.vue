@@ -6,12 +6,8 @@
       <template v-slot:quickEdit="{ inputs }">
         <form @submit.prevent="quickEditDoneEdting">
           <UserForm :inputs="inputs" :response="response" :quick="true" />
-          <b-button type="is-success" native-type="submit">
-            <i class="fa fa-check"></i> Save</b-button
-          >
-          <b-button @click="quickEditDone" type="is-error" native-type="submit">
-            Cancel</b-button
-          >
+          <submit-button />
+          <reset-button />
         </form>
       </template>
     </Table>
@@ -23,6 +19,8 @@
   </div>
 </template>
 <script>
+import SubmitButton from "@/components/inputs/submit";
+import ResetButton from "@/components/inputs/reset";
 import Table from "~/components/admin/common/table";
 import MixinTable from "~/mixin/table";
 import moment from "moment";
