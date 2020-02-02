@@ -2,7 +2,19 @@
   <div>
     <page-head :pageHead="pageHead" />
     <a href @click.prevent="activeAll">Active All</a>
-    <Table :defaultProps="defaultProps" />
+    <Table :defaultProps="defaultProps">
+      <template v-slot:quickEdit="{ inputs }">
+        <form @submit.prevent="quickEditDoneEdting">
+          <UserForm :inputs="inputs" :response="response" :quick="true" />
+          <b-button type="is-success" native-type="submit">
+            <i class="fa fa-check"></i> Save</b-button
+          >
+          <b-button @click="quickEditDone" type="is-error" native-type="submit">
+            Cancel</b-button
+          >
+        </form>
+      </template>
+    </Table>
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->
     <!--      <template v-slot:customFilter>-->
@@ -15,22 +27,25 @@ import Table from "~/components/admin/common/table";
 import MixinTable from "~/mixin/table";
 import moment from "moment";
 import pageHead from "~/components/admin/common/pageHead";
+import UserForm from "@/components/forms";
+import User from "@/objects/admin/forms/users";
 
 export default {
   mixins: [
     MixinTable({
       tableOption: {
         actionsColumnName: "email"
-      }
+      },
+      createEditFormInputs: User
     })
   ],
   components: {
     Table,
-    pageHead
+    pageHead,
+    UserForm
   },
   mounted() {
-    this.index();
-    this.headers.push(this.editAction, this.deleteAction);
+    this.loadData();
   },
   methods: {
     activeAll() {
@@ -39,6 +54,7 @@ export default {
   },
   data() {
     return {
+      row: {},
       pageHead: {
         btn: {
           url: "/users/create",

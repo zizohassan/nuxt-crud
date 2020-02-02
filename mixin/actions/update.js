@@ -38,8 +38,9 @@ export default {
             this.requestOptions.id;
         }
         let request = {};
-        _.assign(request, this.requestOptions);
+        request = _.cloneDeep(this.requestOptions);
         request.data = this.transformDataType(request.data);
+        console.log(request, this.requestOptions.data);
         if (request.data) {
           this.put(request)
             .then(res => {

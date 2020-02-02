@@ -2,21 +2,40 @@
   <div>
     <!-- handel actions pass actionsColumnName in table option or will append on col index 0 -->
     <div
-      v-if="header.name == defaultProps.tableOption.actionsColumnName ||
-     (!defaultProps.tableOption.actionsColumnName && index == 0)"
+      v-if="
+        header.name == defaultProps.tableOption.actionsColumnName ||
+          (!defaultProps.tableOption.actionsColumnName && index == 0)
+      "
     >
-      <a v-if="defaultProps.tableOption.editBtn" @click.prevent="editAction(row.id)">Edit</a> |
+      <a
+        v-if="defaultProps.tableOption.editBtn"
+        @click.prevent="editAction(row.id)"
+        >Edit</a
+      >
+      |
       <a
         v-if="defaultProps.tableOption.deleteBtn"
-        @click.prevent="deleteAction(row , header , index)"
-      >Delete</a>
+        @click.prevent="deleteAction(row, header)"
+        >Delete</a
+      >
       |
       <a
         v-if="defaultProps.tableOption.qeditBtn"
-        @click.prevent="qeditAction(row.id)"
-      >Quick Edit</a> |
-      <a v-if="defaultProps.tableOption.trashBtn" @click.prevent="trashAction(row.id)">Trash</a> |
-      <a v-if="defaultProps.tableOption.activeBtn" @click.prevent="activeAction(row.id)">Active</a>
+        @click.prevent="qeditAction(row)"
+        >Quick Edit</a
+      >
+      |
+      <a
+        v-if="defaultProps.tableOption.trashBtn"
+        @click.prevent="trashAction(row.id)"
+        >Trash</a
+      >
+      |
+      <a
+        v-if="defaultProps.tableOption.activeBtn"
+        @click.prevent="activeAction(row.id)"
+        >Active</a
+      >
     </div>
     <!--- end handel action handel --->
   </div>
@@ -27,9 +46,6 @@ import Request from "~/mixin/requests";
 export default {
   mixins: [Request],
   props: ["defaultProps", "header", "index", "row"],
-  mounted() {
-    console.log(this);
-  },
   methods: {
     editAction(id) {
       this.$router.push(this.defaultProps.moduleName + "/edit/" + id);
@@ -41,8 +57,10 @@ export default {
       };
       this.get(requestOption);
     },
-    qeditAction(id) {
-      alert("quick edit");
+    qeditAction(quickEditRow) {
+      this.defaultProps.methods.setQuickEditRow(quickEditRow);
+      // console.log(this.defaultProps.methods.setQuickEditRow);
+      // alert("quick edit");
     },
     activeAction(id) {
       let requestOption = {
@@ -51,7 +69,7 @@ export default {
       };
       this.get(requestOption);
     },
-    deleteAction: (row, header, indexOfRow) => {
+    deleteAction(row, header) {
       this.$buefy.dialog.confirm({
         title: "Are You Sure you want to delete !",
         message:
@@ -62,10 +80,9 @@ export default {
         onConfirm: () => {
           let options = {
             id: row.id,
-            index: indexOfRow,
-            list: this.response.payload.records
+            list: this.defaultProps.response.payload.records
           };
-          this.deleteRow(options);
+          this.defaultProps.methods.deleteRow(options);
         }
       });
     }

@@ -34,7 +34,7 @@
 
       <div class="container column is-10">
         <BreadCrumb />
-        <nuxt />
+        <Nuxt />
       </div>
     </section>
   </div>

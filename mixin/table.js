@@ -1,14 +1,16 @@
 import Notification from "./notifiaction";
 import Request from "./requests";
 import Delete from "./actions/delete";
+import Update from "./actions/update";
 import PaginationResponse from "./objects/paginateResponse";
 
 export default ({
   withEdit = true,
+  createEditFormInputs = () => [],
   withDelete = true,
   tableOption = {}
 } = {}) => ({
-  mixins: [Notification, Request, Delete, PaginationResponse],
+  mixins: [Notification, Request, Delete, Update, PaginationResponse],
   computed: {
     defaultProps() {
       return {
@@ -18,7 +20,14 @@ export default ({
         tableOption: this.tableOption,
         sorting: this.sorting,
         changePage: this.changePage,
-        setIds: this.SetIds
+        setIds: this.SetIds,
+
+        methods: {
+          deleteRow: this.deleteRow,
+          setQuickEditRow: this.setQuickEditRow
+        },
+        quickEditRow: this.quickEditRow,
+        quickEditRequestOptions: this.quickEditRequestOptions
       };
     }
   },
@@ -40,59 +49,16 @@ export default ({
       },
       /////default actions
       moduleName: "",
-      editAction: {
-        name: "id",
-        sort: false,
-        title: "Edit",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-edit" ></i> </span>`
-        },
-        click: val => {
-          this.$router.push(this.moduleName + "/edit/" + val.id);
-        }
-      },
-      deleteAction: {
-        name: "id",
-        sort: false,
-        title: "Delete",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-trash" ></i> </span>`
-        },
-        click: (row, header, indexOfRow) => {
-          this.$buefy.dialog.confirm({
-            title: "Are You Sure you want to delete !",
-            message:
-              "are you sure you want to delete ?  you can not restore this action",
-            confirmText: "Delete",
-            type: "is-danger",
-            hasIcon: true,
-            onConfirm: () => {
-              let options = {
-                id: row.id,
-                index: indexOfRow,
-                list: this.response.payload.records
-              };
-              this.deleteRow(options);
-            }
-          });
-        }
-      },
-      quickEditAction: {
-        name: "id",
-        sort: false,
-        title: "Delete",
-        render: {
-          type: "html",
-          action: val => `<span><i class="fa fa-trash" ></i> </span>`
-        }
-      },
       ///index
       headers: [],
       ids: [],
       customFilter: [],
-      queries: {}
+      queries: {},
+      quickEditRow: -1,
+      quickEditRequestOptions: {
+        id: 0,
+        data: createEditFormInputs()
+      }
     };
   },
   methods: {
@@ -111,7 +77,7 @@ export default ({
       };
       this.queries = merge;
     },
-    index() {
+    loadData() {
       if (this.__timeout) clearTimeout(this.__timeout);
       this.__timeout = setTimeout(() => {
         /// first set the default query string
@@ -153,13 +119,13 @@ export default ({
       this.tableOption.sortKey = keyName;
       this.queries.sort =
         this.tableOption.sortKey + "|" + this.tableOption.sortValue;
-      this.index();
+      this.loadData();
     },
     changePage(page) {
       // this.response.payload.page = page;
       console.log(page);
       this.queries.page = page;
-      this.index();
+      this.loadData();
     },
     appendQueryStringToApiCall() {
       let query = "";
@@ -173,10 +139,32 @@ export default ({
     filter(key, val) {
       this.queries[key] = val;
       this.response.payload.page = 1;
-      this.index();
+      this.loadData();
     },
     SetIds(ids) {
       this.ids = ids;
+    },
+    setQuickEditRow(row) {
+      this.quickEditRow = row;
+    },
+    quickEditDone(index) {
+      this.setQuickEditRow({});
+    },
+    quickEditDoneEdting(e) {
+      this.update(this.quickEditRequestOptions).then(() => {
+        this.requestOptions.data.forEach(e => {
+          this.quickEditRow[e.name] = e.vModel;
+        });
+        this.quickEditDone();
+      });
+    }
+  },
+  watch: {
+    quickEditRow(row) {
+      this.quickEditRequestOptions.data.forEach(element => {
+        element.vModel = row[element.name];
+      });
+      this.quickEditRequestOptions.id = row.id;
     }
   }
 });

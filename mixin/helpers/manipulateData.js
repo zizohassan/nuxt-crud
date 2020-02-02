@@ -15,6 +15,7 @@ export default {
           newObject[value.name] = val;
         }
       });
+      console.log("hello", newObject);
       return newObject;
     },
     setValuesToObject(object, values) {

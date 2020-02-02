@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-for="singleInput in inputs" :key="singleInput.name">
+    <div
+      v-for="singleInput in quick ? quickInputs : inputs"
+      :key="singleInput.name"
+    >
       <div v-if="singleInput.type === 'text'">
         <text-input :input="singleInput" :error="response.errors" />
       </div>
@@ -23,12 +26,20 @@ import PasswordInput from "./inputs/password";
 import SelectInput from "./inputs/select";
 
 export default {
-  props: ["inputs", "response"],
+  props: ["inputs", "response", "quick"],
   components: {
     TextInput,
     EmailInput,
     SelectInput,
     PasswordInput
+  },
+  mounted() {
+    console.log(this.inputs);
+  },
+  computed: {
+    quickInputs() {
+      return this.inputs.filter(i => i.quick);
+    }
   }
 };
 </script>
