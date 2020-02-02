@@ -29,7 +29,7 @@ export default {
     pageHead
   },
   mounted() {
-    this.index();
+    this.loadData();
   },
   methods: {
     activeAll() {

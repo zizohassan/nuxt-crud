@@ -66,7 +66,7 @@ export default ({
       };
       this.queries = merge;
     },
-    index() {
+    loadData() {
       if (this.__timeout) clearTimeout(this.__timeout);
       this.__timeout = setTimeout(() => {
         /// first set the default query string
@@ -108,13 +108,13 @@ export default ({
       this.tableOption.sortKey = keyName;
       this.queries.sort =
         this.tableOption.sortKey + "|" + this.tableOption.sortValue;
-      this.index();
+      this.loadData();
     },
     changePage(page) {
       // this.response.payload.page = page;
       console.log(page);
       this.queries.page = page;
-      this.index();
+      this.loadData();
     },
     appendQueryStringToApiCall() {
       let query = "";
@@ -128,7 +128,7 @@ export default ({
     filter(key, val) {
       this.queries[key] = val;
       this.response.payload.page = 1;
-      this.index();
+      this.loadData();
     },
     SetIds(ids) {
       this.ids = ids;
