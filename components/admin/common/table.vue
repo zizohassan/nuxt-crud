@@ -1,21 +1,6 @@
 <template>
   <div>
-    <template v-if="defaultProps.tableOption.filterPosition === 'outside-table'">
-      <span v-for="(header, index) in defaultProps.headers" :key="header.name + '_filter_' + index">
-        <template v-if="header.filter !== undefined">
-          <filters :header="header" />
-        </template>
-      </span>
-      <span
-        v-for="(filter, index) in defaultProps.customFilter"
-        :key="header.name + '_custom_filter_' + index"
-      >
-        <template v-if="filter.filter !== undefined">
-          <filters :header="filter" />
-        </template>
-      </span>
-      <slot name="customFilter"></slot>
-    </template>
+    <outsideFilter :defaultProps="defaultProps" />
     <table>
       <thead>
         <tr>
@@ -74,6 +59,7 @@
 </template>
 <script>
 import Render from "./table/render";
+import outsideFilter from "./table/outsideFilter";
 import Headers from "./table/headers";
 import Filters from "./filters";
 import Pagination from "./pagination";
@@ -85,7 +71,8 @@ export default {
     Filters,
     Pagination,
     Actions,
-    Headers
+    Headers,
+    outsideFilter
   },
   props: ["defaultProps"],
   data() {
