@@ -42,7 +42,7 @@ export default {
         request.data = this.transformDataType(request.data);
         console.log(request, this.requestOptions.data);
         if (request.data) {
-          this.put(request)
+          this.$put(request)
             .then(res => {
               if (this.issetAndNotEmptyString(request, "responseAttr")) {
                 this.row = res[request.responseAttr];

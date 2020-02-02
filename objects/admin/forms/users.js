@@ -45,8 +45,7 @@ const formSettings = [
     options: [
       { text: "Active", value: 2 },
       { text: "Block", value: 1 }
-    ],
-    quick: true
+    ]
   },
   {
     label: "Role",

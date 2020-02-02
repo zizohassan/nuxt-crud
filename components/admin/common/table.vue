@@ -23,56 +23,37 @@
             v-for="(header, indexHeader) in defaultProps.headers"
             :key="header.name + '_' + indexRow + '_' + indexHeader"
           >
-            <template v-if="row[header.name]">
-              <template v-if="header.click !== undefined">
-                <a
-                  href
-                  @click.prevent="
-                    header.click(row, header, indexRow, indexHeader)
-                  "
-                >
-                  <render :header="header" :column="row" />
-                </a>
-              </template>
-              <template v-else>
-                <render :header="header" :column="row" />
-              </template>
-            </template>
-            <Actions
-              :header="header"
+            <TableBody
               :defaultProps="defaultProps"
-              :index="indexHeader"
               :row="row"
-              :rowIndex="indexRow"
+              :header="header"
+              :indexHeader="indexHeader"
+              :indexRow="indexRow"
             />
           </td>
         </tr>
-        <tr v-if="row.id === defaultProps.quickEditRow.id" class="quickEdit">
-          <td :colspan="Object.keys(row).length">
-            <slot name="quickEdit" :inputs="defaultProps.quickEditRequestOptions.data"></slot>
-          </td>
-        </tr>
+        <quickEdit :defaultProps="defaultProps" :row="row"></quickEdit>
       </tbody>
     </table>
     <Pagination :response="defaultProps.response" @changePage="defaultProps.changePage" />
   </div>
 </template>
 <script>
-import Render from "./table/render";
 import outsideFilter from "./table/outsideFilter";
+import TableBody from "./table/body";
+import quickEdit from "./table/qedit";
 import Headers from "./table/headers";
 import Filters from "./filters";
 import Pagination from "./pagination";
-import Actions from "./table/actionsBtns";
 
 export default {
   components: {
-    Render,
     Filters,
     Pagination,
-    Actions,
     Headers,
-    outsideFilter
+    outsideFilter,
+    TableBody,
+    quickEdit
   },
   props: ["defaultProps"],
   data() {

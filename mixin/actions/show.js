@@ -35,7 +35,7 @@ export default {
             "/" +
             this.requestOptions.id;
         }
-        this.get(this.requestOptions)
+        this.$get(this.requestOptions)
           .then(res => {
             if (
               this.issetAndNotEmptyString(this.requestOptions, "responseAttr")

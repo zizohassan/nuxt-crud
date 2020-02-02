@@ -95,7 +95,7 @@ export default ({
             query: this.queries
           });
           ////
-          this.get(options)
+          this.$get(options)
             .then(res => {
               this.response = res;
               resolve(res);

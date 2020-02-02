@@ -35,7 +35,7 @@ export default {
         _.assign(request, this.requestOptions);
         request.data = this.transformDataType(request.data);
         if (request.data) {
-          this.post(request)
+          this.$post(request)
             .then(res => {
               if (this.issetAndNotEmptyString(request, "responseAttr")) {
                 this.row = res[request.responseAttr];

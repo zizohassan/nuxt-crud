@@ -18,7 +18,8 @@
     "moment": "^2.24.0",
     "nuxt": "^2.11.0",
     "nuxt-buefy": "^0.3.2",
-    "pluralize": "^8.0.0"
+    "pluralize": "^8.0.0",
+    "vue-inject": "^2.1.1"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1"
