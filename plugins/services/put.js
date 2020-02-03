@@ -1,9 +1,10 @@
 export default ({ app }, inject) => {
   inject("_put", function(request) {
+    console.log("put actions");
     return new Promise((resolve, reject) => {
       let loadingObj = this.$buefy.loading.open();
       this.$axios
-        .post(request.url, request.data, request.headers)
+        .put(request.url, request.data, request.headers)
         .then(res => {
           loadingObj.close();
           resolve(res.data);
