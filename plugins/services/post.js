@@ -1,5 +1,5 @@
 export default ({ app }, inject) => {
-  inject("post", function(request) {
+  inject("_post", function(request) {
     return new Promise((resolve, reject) => {
       //   this.startLoading();
       this.$axios

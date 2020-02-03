@@ -7,8 +7,8 @@
       <template v-slot:quickEdit="{ inputs }">
         <form @submit.prevent="quickEditDoneEdting">
           <UserForm :inputs="inputs" :response="response" :quick="true" />
-          <submit-button />
-          <reset-button />
+          <SubmitButton />
+          <ResetButton />
         </form>
       </template>
     </Table>
@@ -18,6 +18,7 @@
     <!--      <template v-slot:customFilter>-->
     <!--        input-->
     <!--      </template>-->
+    <Loader ref="loadingTable" />
   </div>
 </template>
 <script>
@@ -34,7 +35,8 @@ export default {
   mixins: [
     MixinTable({
       tableOption: {
-        actionsColumnName: "email"
+        actionsColumnName: "email",
+        loaderRef: "loadingTable"
       },
       createEditFormInputs: User
     })

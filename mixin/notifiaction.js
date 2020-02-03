@@ -5,14 +5,7 @@ export default {
     };
   },
   methods: {
-    notification(message, type) {
-      this.$buefy.toast.open({
-        duration: 2000,
-        message: message,
-        type: type,
-        position: this.notificationPosition
-      });
-    },
+    notification(message, type) {},
     success(message) {
       this.notification(
         message ? message : "Something happened correctly!",

@@ -3,6 +3,7 @@ import Request from "./requests";
 import Delete from "./actions/delete";
 import Update from "./actions/update";
 import PaginationResponse from "./objects/paginateResponse";
+import Loader from "@/components/loading";
 
 export default ({
   withEdit = true,
@@ -10,6 +11,7 @@ export default ({
   withDelete = true,
   tableOption = {}
 } = {}) => ({
+  components: { Loader },
   mixins: [Notification, Request, Delete, Update, PaginationResponse],
   computed: {
     defaultProps() {
@@ -88,14 +90,15 @@ export default ({
               "/" +
               this.moduleName +
               "?" +
-              this.appendQueryStringToApiCall()
+              this.appendQueryStringToApiCall(),
+            loaderRef: this.tableOption.loaderRef
           };
           ///then now append all query strings with filters
           this.$router.push({
             query: this.queries
           });
           ////
-          this.$get(options)
+          this.$get(options, true)
             .then(res => {
               this.response = res;
               resolve(res);

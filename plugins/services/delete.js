@@ -1,5 +1,5 @@
 export default ({ app }, inject) => {
-  inject("get", function(request) {
+  inject("_get", function(request) {
     return new Promise((resolve, reject) => {
       this.$nuxt.$loading.load = true;
       app.$axios

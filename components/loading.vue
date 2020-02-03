@@ -11,10 +11,13 @@ export default {
   }),
   methods: {
     start() {
+      console.log("SSS");
       this.loading = true;
     },
     finish() {
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
     }
   }
 };
@@ -23,10 +26,11 @@ export default {
 <style scoped>
 .loading-page {
   position: fixed;
+  z-index: 99999999999;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding-top: 200px;

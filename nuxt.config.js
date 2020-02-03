@@ -26,7 +26,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: "~/components/loading.vue",
+  loading: false,
   /*
    ** Global CSS
    */
@@ -38,7 +38,8 @@ export default {
     "@/plugins/services/post.js",
     "@/plugins/services/put.js",
     "@/plugins/services/delete.js",
-    "@/plugins/services/get.js"
+    "@/plugins/services/get.js",
+    "@/plugins/services/toast.js"
   ],
   /*
    ** Nuxt.js dev-modules
