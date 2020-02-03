@@ -31,18 +31,13 @@ export default {
       return new Promise((resolve, reject) => {
         if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url =
-            this.adminUrl +
-            "/" +
-            this.moduleName +
-            "/" +
-            this.requestOptions.id;
+            this.adminUrl + this.moduleName + "/" + this.requestOptions.id;
         }
         let request = {};
-        request = _.cloneDeep(this.requestOptions);
+        _.assign(request, this.requestOptions);
         request.data = this.transformDataType(request.data);
-        console.log(request, this.requestOptions.data);
         if (request.data) {
-          this.$put(request)
+          this.$_put(request)
             .then(res => {
               if (this.issetAndNotEmptyString(request, "responseAttr")) {
                 this.row = res[request.responseAttr];

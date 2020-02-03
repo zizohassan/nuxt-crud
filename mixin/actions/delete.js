@@ -34,7 +34,7 @@ export default {
             "/" +
             this.requestOptions.id;
         }
-        this.$delete(this.requestOptions)
+        this.$_delete(this.requestOptions)
           .then(res => {
             if (
               this.issetAndNotNull(this.requestOptions, "index") &&

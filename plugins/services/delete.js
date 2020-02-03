@@ -1,17 +1,15 @@
 export default ({ app }, inject) => {
-  inject("_get", function(request) {
+  inject("_delete", function(request) {
     return new Promise((resolve, reject) => {
-      this.$nuxt.$loading.load = true;
+      let loadingObj = this.$buefy.loading.open();
       app.$axios
         .delete(request.url, request.headers)
         .then(res => {
-          this.$nuxt.$loading.load = false;
-          //   console.log("herer", res.data);
+          loadingObj.close();
           resolve(res.data);
         })
         .catch(res => {
-          this.$nuxt.$loading.load = false;
-          //   this.handelResponseError(res);
+          loadingObj.close();
           reject(res.response.data);
         });
     });

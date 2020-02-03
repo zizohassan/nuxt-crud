@@ -29,13 +29,9 @@ export default {
       return new Promise((resolve, reject) => {
         if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url =
-            this.adminUrl +
-            "/" +
-            this.moduleName +
-            "/" +
-            this.requestOptions.id;
+            this.adminUrl + this.moduleName + "/" + this.requestOptions.id;
         }
-        this.$get(this.requestOptions)
+        this.$_get(this.requestOptions)
           .then(res => {
             if (
               this.issetAndNotEmptyString(this.requestOptions, "responseAttr")

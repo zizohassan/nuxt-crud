@@ -1,17 +1,15 @@
 export default ({ app }, inject) => {
-  inject("_post", function(request) {
+  inject("_put", function(request) {
     return new Promise((resolve, reject) => {
-      //   this.startLoading();
-      app.$axios
-        .put(request.url, request.data, request.headers)
+      let loadingObj = this.$buefy.loading.open();
+      this.$axios
+        .post(request.url, request.data, request.headers)
         .then(res => {
-          //   this.stopLoading();
-          //   this.success(res.data.message);
+          loadingObj.close();
           resolve(res.data);
         })
         .catch(res => {
-          //   this.stopLoading();
-          //   this.handelResponseError(res);
+          loadingObj.close();
           reject(res.response.data);
         });
     });

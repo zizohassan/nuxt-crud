@@ -29,13 +29,13 @@ export default {
       }
       return new Promise((resolve, reject) => {
         if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
-          this.requestOptions.url = this.adminUrl + "/" + this.moduleName;
+          this.requestOptions.url = this.adminUrl + this.moduleName;
         }
         let request = {};
         _.assign(request, this.requestOptions);
         request.data = this.transformDataType(request.data);
         if (request.data) {
-          this.$post(request)
+          this.$_post(request)
             .then(res => {
               if (this.issetAndNotEmptyString(request, "responseAttr")) {
                 this.row = res[request.responseAttr];
