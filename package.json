@@ -19,7 +19,8 @@
     "nuxt": "^2.11.0",
     "nuxt-buefy": "^0.3.2",
     "pluralize": "^8.0.0",
-    "vue-inject": "^2.1.1"
+    "vue-inject": "^2.1.1",
+    "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1"

@@ -1,22 +1,24 @@
 <template>
   <span>
-    <template v-if="row[header.name]">
-      <template v-if="header.click !== undefined">
-        <a href @click.prevent="header.click(row, header, indexRow, indexHeader)">
+    <span v-if="header.show">
+      <template v-if="row[header.name]">
+        <template v-if="header.click !== undefined">
+          <a href @click.prevent="header.click(row, header, indexRow, indexHeader)">
+            <render :header="header" :column="row" />
+          </a>
+        </template>
+        <template v-else>
           <render :header="header" :column="row" />
-        </a>
+        </template>
       </template>
-      <template v-else>
-        <render :header="header" :column="row" />
-      </template>
-    </template>
-    <actions
-      :header="header"
-      :defaultProps="defaultProps"
-      :index="indexHeader"
-      :row="row"
-      :rowIndex="indexRow"
-    />
+      <actions
+        :header="header"
+        :defaultProps="defaultProps"
+        :index="indexHeader"
+        :row="row"
+        :rowIndex="indexRow"
+      />
+    </span>
   </span>
 </template>
 <script>

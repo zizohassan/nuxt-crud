@@ -13,6 +13,7 @@
       </template>
     </Table>
 
+    <EditTable :defaultProps="defaultProps"></EditTable>
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->
     <!--      <template v-slot:customFilter>-->
@@ -24,6 +25,7 @@
 import SubmitButton from "@/components/inputs/submit";
 import ResetButton from "@/components/inputs/reset";
 import Table from "~/components/admin/common/table";
+import EditTable from "~/components/admin/common/EditTable";
 import MixinTable from "~/mixin/table";
 import moment from "moment";
 import pageHead from "~/components/admin/common/pageHead";
@@ -43,7 +45,8 @@ export default {
   components: {
     Table,
     pageHead,
-    UserForm
+    UserForm,
+    EditTable
   },
   mounted() {
     this.loadData();
@@ -68,6 +71,7 @@ export default {
         {
           name: "block",
           sort: true,
+          show: true,
           title: "User Status",
           render: {
             action: val => {
@@ -94,6 +98,7 @@ export default {
         {
           name: "name",
           sort: true,
+          show: true,
           title: "User Name",
           filter: {
             type: "text",
@@ -106,6 +111,7 @@ export default {
         {
           name: "email",
           sort: true,
+          show: true,
           title: "Email",
           filter: {
             type: "email",
@@ -118,6 +124,7 @@ export default {
         {
           name: "created_at",
           sort: true,
+          show: true,
           title: "Created At",
           render: {
             action: val => {
@@ -135,6 +142,7 @@ export default {
         {
           name: "updated_at",
           sort: true,
+          show: true,
           title: "Updated At",
           render: {
             action: val => {
@@ -152,6 +160,7 @@ export default {
         {
           name: "role",
           sort: true,
+          show: true,
           title: "Role",
           render: {
             action: val => {
