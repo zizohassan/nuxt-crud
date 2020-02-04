@@ -1,7 +1,7 @@
 export default ({ app }, inject) => {
-  inject("_get", function(request = {}, global) {
+  inject("_get", function(request = {}, globalLoader) {
     let loadingObj;
-    if (global) {
+    if (globalLoader) {
       loadingObj = this.$buefy.loading.open();
     } else if (
       request.loaderRef &&
@@ -20,7 +20,7 @@ export default ({ app }, inject) => {
           reject(res.response.data);
         })
         .finally(() => {
-          if (global) {
+          if (globalLoader) {
             loadingObj.close();
           } else if (
             request.loaderRef &&

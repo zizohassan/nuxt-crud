@@ -18,7 +18,6 @@
     <!--      <template v-slot:customFilter>-->
     <!--        input-->
     <!--      </template>-->
-    <Loader ref="loadingTable" />
   </div>
 </template>
 <script>
