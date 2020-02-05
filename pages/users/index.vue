@@ -1,17 +1,9 @@
 <template>
   <div>
-    <page-head :pageHead="pageHead" />
+    <PageHead :pageHead="pageHead" />
     <a href @click.prevent="activeAll">Active All</a>
 
-    <Table :defaultProps="defaultProps">
-      <template v-slot:quickEdit="{ inputs }">
-        <Form @submit.prevent="quickEditDoneEdting">
-          <UserForm :inputs="inputs" :response="response" :quick="true" />
-          <SubmitButton />
-          <ResetButton />
-        </Form>
-      </template>
-    </Table>
+    <Table :defaultProps="defaultProps" />
 
     <EditTable :defaultProps="defaultProps"></EditTable>
     <!--    custom filter-->
@@ -22,14 +14,11 @@
   </div>
 </template>
 <script>
-import SubmitButton from "@/components/form/Submit";
-import ResetButton from "@/components/form/Reset";
 import Table from "@/components/table/Table";
 import EditTable from "@/components/table/EditTable";
 import MixinTable from "@/mixin/table";
 import moment from "moment";
-import pageHead from "@/components/PageHead";
-import Form from "@/components/form/Form";
+import PageHead from "@/components/PageHead";
 import { createFormSchema } from "./formSchema";
 
 export default {
@@ -44,8 +33,7 @@ export default {
   ],
   components: {
     Table,
-    pageHead,
-    Form,
+    PageHead,
     EditTable
   },
   mounted() {

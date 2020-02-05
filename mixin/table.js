@@ -25,7 +25,8 @@ export default ({
         setIds: this.SetIds,
         methods: {
           deleteRow: this.deleteRow,
-          setQuickEditRow: this.setQuickEditRow
+          setQuickEditRow: this.setQuickEditRow,
+          quickEditDoneEditing: this.quickEditDoneEditing
         },
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
@@ -152,8 +153,8 @@ export default ({
     quickEditDone(index) {
       this.setQuickEditRow({});
     },
-    quickEditDoneEdting(e) {
-      this.update(this.quickEditRequestOptions).then(() => {
+    quickEditDoneEditing(e) {
+      this.update(this.quickEditRequestOptions).then(res => {
         this.requestOptions.data.forEach(e => {
           this.quickEditRow[e.name] = e.value;
         });

@@ -42,7 +42,7 @@
             />
           </td>
         </tr>
-        <quickEdit :defaultProps="defaultProps" :row="row"></quickEdit>
+        <QuickEdit :defaultProps="defaultProps" :row="row"></QuickEdit>
       </tbody>
     </table>
     <Pagination
@@ -54,7 +54,7 @@
 <script>
 import outsideFilter from "./TableOutsideFilter";
 import TableBody from "./TableBody";
-import quickEdit from "./TableQuickEdit";
+import QuickEdit from "./TableQuickEdit";
 import Headers from "./TableHeaders";
 import Filters from "./filter/Filter";
 import Pagination from "./TablePagination";
@@ -66,7 +66,7 @@ export default {
     Headers,
     outsideFilter,
     TableBody,
-    quickEdit
+    QuickEdit
   },
   props: ["defaultProps"],
   data() {
