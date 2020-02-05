@@ -35,11 +35,10 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    "@/plugins/services/post.js",
-    "@/plugins/services/put.js",
-    "@/plugins/services/delete.js",
-    "@/plugins/services/get.js",
-    "@/plugins/services/toast.js"
+    "@/plugins/requests.js",
+    "@/plugins/toast.js",
+    "@/plugins/helpers.js",
+    "@/plugins/form.js"
   ],
   /*
    ** Nuxt.js dev-modules
