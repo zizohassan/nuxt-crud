@@ -25,14 +25,12 @@
   </div>
 </template>
 <script>
-import BreadCrumb from "@/mixin/breadcrumb";
-import { getCrumbOptions } from "./breadCrumb";
+import { configObj } from "@/config/breadCrumbConfig";
 
 export default {
   data() {
     return {
       acitveClass: "active"
-      // override: {}
     };
   },
   computed: {
@@ -41,6 +39,8 @@ export default {
     }
   }
 };
+
+// LOGIC AND HELPERS
 
 function pathToCrumbs(path) {
   let relativePath = "";
@@ -63,5 +63,31 @@ function pathToCrumbs(path) {
       return crumbObj;
     })
   ];
+}
+
+const configMap = {};
+
+const traverseConfig = (object, path = "") => {
+  for (const key in object) {
+    const { children, ...rest } = object[key];
+
+    if (children) {
+      traverseConfig(children, path + "/" + key);
+    }
+
+    configMap[path + "/" + key] = rest;
+  }
+};
+
+traverseConfig(configObj);
+
+function getCrumbOptions(path) {
+  let options = configMap[path] ||
+    configObj.__default[path.split("/").pop()] || {
+      label: path.split("/").pop()
+    };
+
+  options = { ...options, label: options.label };
+  return options;
 }
 </script>

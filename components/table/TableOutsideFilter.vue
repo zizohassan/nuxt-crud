@@ -1,6 +1,9 @@
 <template>
   <div v-if="defaultProps.tableOption.filterPosition === 'outside-table'">
-    <span v-for="(header, index) in defaultProps.headers" :key="header.name + '_filter_' + index">
+    <span
+      v-for="(header, index) in defaultProps.headers"
+      :key="header.name + '_filter_' + index"
+    >
       <template v-if="header.filter !== undefined">
         <filters :header="header" />
       </template>
@@ -17,7 +20,7 @@
   </div>
 </template>
 <script>
-import Filters from "../filters";
+import Filters from "./filter/Filter";
 
 export default {
   props: ["defaultProps"],

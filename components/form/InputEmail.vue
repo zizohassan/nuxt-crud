@@ -8,7 +8,7 @@
     >
       <b-form-input
         :id="input.name"
-        v-model="input.vModel"
+        v-model="input.value"
         type="email"
         :name="input.name"
         :placeholder="input.placeholder"

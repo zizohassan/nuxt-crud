@@ -1,40 +1,38 @@
 export default ({ app }, inject) => {
   inject(
     "_get",
-    requestCreator(request => app.$axios.get(request.url, request.headers))
+    requestCreator(({ url, headers }) => app.$axios.get(url, headers))
   );
-
+  inject(
+    "_delete",
+    requestCreator(({ url, headers }) => app.$axios.delete(url, headers))
+  );
   inject(
     "_post",
-    requestCreator(request =>
-      app.$axios.post(request.url, request.data, request.headers)
+    requestCreator(({ url, data, headers }) =>
+      app.$axios.post(url, data, headers)
     )
   );
 
   inject(
     "_put",
-    requestCreator(request =>
-      app.$axios.put(request.url, request.data, request.headers)
+    requestCreator(({ url, data, headers }) =>
+      app.$axios.put(url, data, headers)
     )
-  );
-
-  inject(
-    "_delete",
-    requestCreator(request => app.$axios.delete(request.url, request.headers))
   );
 };
 
 const requestCreator = promiseFunction =>
-  function(request, globalLoader) {
+  function(request, { showGlobalLoader, loaderRef } = {}) {
     let loadingObj;
-    if (globalLoader) {
-      loadingObj = this.$buefy.loading.open();
-    } else if (
-      request.loaderRef &&
-      this.$refs[request.loaderRef] &&
-      typeof this.$refs[request.loaderRef].start === "function"
-    ) {
-      this.$refs[request.loaderRef].start();
+    let ref;
+
+    if (showGlobalLoader) loadingObj = this.$buefy.loading.open();
+
+    if (loaderRef) {
+      if (typeof loaderRef === "string") ref = this.$refs[loaderRef];
+      else ref = loaderRef;
+      if (ref && typeof ref.start === "function") ref.start();
     }
 
     return promiseFunction(request)
@@ -44,15 +42,9 @@ const requestCreator = promiseFunction =>
       .catch(res => {
         return res.response.data;
       })
-      .finally(() => {
-        if (globalLoader) {
-          loadingObj.close();
-        } else if (
-          request.loaderRef &&
-          this.$refs[request.loaderRef] &&
-          typeof this.$refs[request.loaderRef].finish === "function"
-        ) {
-          this.$refs[request.loaderRef].finish();
-        }
+      .finally(res => {
+        if (showGlobalLoader) loadingObj.close();
+        if (ref && typeof ref.finish === "function") ref.finish();
+        return res;
       });
   };

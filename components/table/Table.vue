@@ -7,16 +7,26 @@
           <td>
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
-          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
+          <th
+            v-for="(header, index) in defaultProps.headers"
+            :key="header.name + '_' + index"
+          >
             <headers :defaultProps="defaultProps" :header="header" />
           </th>
         </tr>
       </thead>
-      <tbody v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+      <tbody
+        v-for="(row, indexRow) in defaultProps.response.payload.records"
+        :key="row.id"
+      >
         <tr>
           <!-- select box -->
           <td>
-            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
+            <b-checkbox
+              v-model="ids"
+              @input="removeCheck"
+              :native-value="row.id"
+            ></b-checkbox>
           </td>
           <!-- end select box -->
           <td
@@ -35,16 +45,19 @@
         <quickEdit :defaultProps="defaultProps" :row="row"></quickEdit>
       </tbody>
     </table>
-    <Pagination :response="defaultProps.response" @changePage="defaultProps.changePage" />
+    <Pagination
+      :response="defaultProps.response"
+      @changePage="defaultProps.changePage"
+    />
   </div>
 </template>
 <script>
-import outsideFilter from "./table/outsideFilter";
-import TableBody from "./table/body";
-import quickEdit from "./table/qedit";
-import Headers from "./table/headers";
-import Filters from "./filters";
-import Pagination from "./pagination";
+import outsideFilter from "./TableOutsideFilter";
+import TableBody from "./TableBody";
+import quickEdit from "./TableQuickEdit";
+import Headers from "./TableHeaders";
+import Filters from "./filter/Filter";
+import Pagination from "./TablePagination";
 
 export default {
   components: {

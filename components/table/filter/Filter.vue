@@ -15,10 +15,10 @@
   </div>
 </template>
 <script>
-import TextInput from "./filters/text";
-import EmailInput from "./filters/email";
-import DateInput from "./filters/date";
-import SelectInput from "./filters/select";
+import TextInput from "./FilterText";
+import EmailInput from "./FilterEmail";
+import DateInput from "./FilterDate";
+import SelectInput from "./FilterSelect";
 
 export default {
   components: {

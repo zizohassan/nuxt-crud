@@ -8,8 +8,8 @@
     >
       <b-form-input
         :id="input.name"
-        v-model="input.vModel"
-        type="password"
+        v-model="input.value"
+        type="text"
         :name="input.name"
         :placeholder="input.placeholder"
       ></b-form-input>

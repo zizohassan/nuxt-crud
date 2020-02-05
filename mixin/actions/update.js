@@ -5,11 +5,9 @@
  */
 
 import Request from "../requests";
-import ManipulateData from "../helpers/manipulateData";
-import Object from "../helpers/object";
 
 export default {
-  mixins: [Request, ManipulateData, Object],
+  mixins: [Request],
   data() {
     return {
       adminUrl: process.env.adminUrl,
@@ -25,21 +23,21 @@ export default {
   },
   methods: {
     update(requestOptions) {
-      if (this.isset(requestOptions)) {
+      if (this.$_.isSet(requestOptions)) {
         this.requestOptions = requestOptions;
       }
       return new Promise((resolve, reject) => {
-        if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
+        if (!this.$_.isSetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url =
             this.adminUrl + this.moduleName + "/" + this.requestOptions.id;
         }
         let request = {};
         _.assign(request, this.requestOptions);
-        request.data = this.transformDataType(request.data);
+        request.data = this.$_form.transformSchemaBeforeSubmit(request.data);
         if (request.data) {
           this.$_put(request)
             .then(res => {
-              if (this.issetAndNotEmptyString(request, "responseAttr")) {
+              if (this.$_.isSetAndNotEmptyString(request, "responseAttr")) {
                 this.row = res[request.responseAttr];
               } else {
                 this.row = res.payload;

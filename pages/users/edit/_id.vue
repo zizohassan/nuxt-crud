@@ -1,9 +1,9 @@
 <template>
   <div>
-    <page-head :pageHead="pageHead" />
+    <PageHead :pageHead="pageHead" />
     <div>
       <form @submit.prevent="updateData">
-        <user-form :inputs="requestOptions.data" :response="response" />
+        <Form :inputs="requestOptions.data" :response="response" />
         <submit-button />
         <reset-button />
       </form>
@@ -11,22 +11,21 @@
   </div>
 </template>
 <script>
-import UserForm from "@/components/forms";
-import User from "@/objects/admin/forms/users";
-import SubmitButton from "@/components/inputs/submit";
-import ResetButton from "@/components/inputs/reset";
+import Form from "@/components/form/Form";
+import { createFormSchema } from "../formSchema";
+import SubmitButton from "@/components/form/Submit";
+import ResetButton from "@/components/form/Reset";
 /////mixin
 import Show from "@/mixin/actions/show";
 import Update from "@/mixin/actions/update";
-import Response from "@/mixin/objects/normalResponse";
-import pageHead from "@/components/admin/common/pageHead";
-
+import Response from "@/mixin/responseSchemas/normalResponse";
+import PageHead from "@/components/PageHead";
 
 export default {
   mixins: [Show, Update, Response],
   components: {
-    pageHead,
-    UserForm,
+    PageHead,
+    Form,
     SubmitButton,
     ResetButton
   },
@@ -49,14 +48,14 @@ export default {
       moduleName: "users",
       requestOptions: {
         id: this.$route.params.id,
-        data: User()
+        data: createFormSchema()
       }
     };
   },
   mounted() {
     this.find().then(res => {
       this.response = res;
-      this.setValuesToObject(this.requestOptions.data, res.payload);
+      this.$_form.setFormSchemaValues(this.requestOptions.data, res.payload);
     });
   },
   methods: {

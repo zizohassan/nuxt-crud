@@ -2,7 +2,7 @@
   <div>
     <template v-if="header.filter.action === undefined">
       <b-select
-        v-model="header.filter.vModel"
+        v-model="header.filter.value"
         :placeholder="'Select a ' + header.name"
       >
         <option
@@ -16,9 +16,9 @@
     </template>
     <template v-else>
       <b-select
-        v-model="header.filter.vModel"
+        v-model="header.filter.value"
         :placeholder="'Select a ' + header.name"
-        @input="header.filter.action(header.filter.vModel)"
+        @input="header.filter.action(header.filter.value)"
       >
         <option
           v-for="option in header.filter.options"
@@ -36,7 +36,7 @@ export default {
   props: ["header"],
   mounted() {
     if (this.$route.query[this.header.name] !== undefined) {
-      this.header.filter.vModel = this.$route.query[this.header.name];
+      this.header.filter.value = this.$route.query[this.header.name];
     }
   }
 };

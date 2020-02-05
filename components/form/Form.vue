@@ -5,25 +5,25 @@
       :key="singleInput.name"
     >
       <div v-if="singleInput.type === 'text'">
-        <text-input :input="singleInput" :error="response.errors" />
+        <TextInput :input="singleInput" :error="response.errors" />
       </div>
       <div v-else-if="singleInput.type === 'password'">
-        <password-input :input="singleInput" :error="response.errors" />
+        <PasswordInput :input="singleInput" :error="response.errors" />
       </div>
       <div v-else-if="singleInput.type === 'email'">
-        <email-input :input="singleInput" :error="response.errors" />
+        <EmailInput :input="singleInput" :error="response.errors" />
       </div>
       <div v-else-if="singleInput.type === 'select'">
-        <select-input :input="singleInput" :error="response.errors" />
+        <SelectInput :input="singleInput" :error="response.errors" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import TextInput from "./inputs/text";
-import EmailInput from "./inputs/email";
-import PasswordInput from "./inputs/password";
-import SelectInput from "./inputs/select";
+import TextInput from "./InputText";
+import EmailInput from "./InputEmail";
+import PasswordInput from "./InputPassword";
+import SelectInput from "./InputSelect";
 
 export default {
   props: ["inputs", "response", "quick"],
@@ -32,9 +32,6 @@ export default {
     EmailInput,
     SelectInput,
     PasswordInput
-  },
-  mounted() {
-    console.log(this.inputs);
   },
   computed: {
     quickInputs() {

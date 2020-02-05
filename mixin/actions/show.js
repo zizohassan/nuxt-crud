@@ -5,10 +5,9 @@
  */
 
 import Request from "../requests";
-import Object from "../helpers/object";
 
 export default {
-  mixins: [Request, Object],
+  mixins: [Request],
   data() {
     return {
       adminUrl: process.env.adminUrl,
@@ -23,18 +22,21 @@ export default {
   },
   methods: {
     find(requestOptions) {
-      if (this.isset(requestOptions)) {
+      if (this.$_.isSet(requestOptions)) {
         this.requestOptions = requestOptions;
       }
       return new Promise((resolve, reject) => {
-        if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
+        if (!this.$_.isSetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url =
             this.adminUrl + this.moduleName + "/" + this.requestOptions.id;
         }
         this.$_get(this.requestOptions)
           .then(res => {
             if (
-              this.issetAndNotEmptyString(this.requestOptions, "responseAttr")
+              this.$_.isSetAndNotEmptyString(
+                this.requestOptions,
+                "responseAttr"
+              )
             ) {
               this.row = res[this.requestOptions.responseAttr];
             } else {

@@ -4,10 +4,9 @@
  * function more than once
  */
 import Request from "../requests";
-import Object from "../helpers/object";
 
 export default {
-  mixins: [Request, Object],
+  mixins: [Request],
   data() {
     return {
       adminUrl: process.env.adminUrl,
@@ -22,11 +21,11 @@ export default {
   },
   methods: {
     deleteRow(requestOptions) {
-      if (this.isset(requestOptions)) {
+      if (this.$_.isSet(requestOptions)) {
         this.requestOptions = requestOptions;
       }
       return new Promise((resolve, reject) => {
-        if (!this.issetAndNotEmptyString(this.requestOptions, "url")) {
+        if (!this.$_.isSetAndNotEmptyString(this.requestOptions, "url")) {
           this.requestOptions.url =
             this.adminUrl +
             "/" +
@@ -37,8 +36,8 @@ export default {
         this.$_delete(this.requestOptions)
           .then(res => {
             if (
-              this.issetAndNotNull(this.requestOptions, "index") &&
-              this.issetAndNotEmptyArray(this.requestOptions, "list")
+              this.$_.isSetAndNotNull(this.requestOptions, "index") &&
+              this.$_.isSetAndNotEmptyArray(this.requestOptions, "list")
             ) {
               let index = this.requestOptions.list.findIndex(
                 item => item.id == this.requestOptions.id

@@ -6,13 +6,20 @@
       :label-for="input.name"
       :description="input.description !== undefined ? input.description : ''"
     >
-      <b-form-input
-        :id="input.name"
-        v-model="input.vModel"
-        type="text"
-        :name="input.name"
-        :placeholder="input.placeholder"
-      ></b-form-input>
+      <b-form-select
+        v-model="input.value"
+        :options="input.options"
+        class="mb-3"
+      >
+        <template v-slot:first>
+          <b-form-select-option
+            :value="input.placeholder.value"
+            selectec
+            disabled
+            >{{ input.placeholder.text }}</b-form-select-option
+          >
+        </template>
+      </b-form-select>
     </b-form-group>
     <div v-if="error && error[input.name]">
       <b-message type="is-danger" has-icon>
@@ -27,6 +34,6 @@
 </template>
 <script>
 export default {
-  props: ["input", "error"],
+  props: ["input", "error"]
 };
 </script>

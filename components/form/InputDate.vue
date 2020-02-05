@@ -2,7 +2,7 @@
   <div>
     <b-datepicker
       :max-date="new Date()"
-      v-model="header.filter.vModel"
+      v-model="header.filter.value"
       :first-day-of-week="1"
       placeholder="Click to select..."
       @input="changeValue"
@@ -10,7 +10,7 @@
     >
       <button
         class="button is-primary"
-        @click="header.filter.vModel = new Date()"
+        @click="header.filter.value = new Date()"
       >
         <b-icon icon="calendar-today"></b-icon>
         <span>Today</span>
@@ -29,15 +29,15 @@ export default {
   props: ["header"],
   methods: {
     changeValue() {
-      if (this.header.filter.vModel !== null) {
-        let formatVal = moment(this.header.filter.vModel).format("YYYY-MM-DD");
+      if (this.header.filter.value !== null) {
+        let formatVal = moment(this.header.filter.value).format("YYYY-MM-DD");
         this.header.filter.action(formatVal);
       } else {
         this.header.filter.action(null);
       }
     },
     clearDate() {
-      this.header.filter.vModel = null;
+      this.header.filter.value = null;
       this.header.filter.action(null);
     }
   }

@@ -60,16 +60,16 @@
   </div>
 </template>
 <script>
-import TableBody from "./table/body";
-import quickEdit from "./table/qedit";
-import Headers from "./table/headers";
+import TableBody from "./TableBody";
+import QuickEdit from "./TableQuickEdit";
+import Headers from "./TableHeaders";
 import Draggable from "vuedraggable";
 
 export default {
   components: {
     Headers,
     TableBody,
-    quickEdit,
+    QuickEdit,
     Draggable
   },
   props: ["defaultProps"],

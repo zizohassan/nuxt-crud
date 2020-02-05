@@ -1,8 +1,8 @@
-const formSettings = [
+const formSchema = [
   {
     label: "Name",
     name: "name",
-    vModel: "",
+    value: "",
     type: "text",
     storeType: "string",
     submitStore: true,
@@ -12,7 +12,7 @@ const formSettings = [
   {
     label: "Email",
     name: "email",
-    vModel: "",
+    value: "",
     type: "email",
     storeType: "string",
     submitStore: true,
@@ -23,7 +23,7 @@ const formSettings = [
   {
     label: "Password",
     name: "password",
-    vModel: "",
+    value: "",
     type: "password",
     storeType: "string",
     submitStore: true,
@@ -33,7 +33,7 @@ const formSettings = [
   {
     label: "Block",
     name: "block",
-    vModel: 0,
+    value: 0,
     type: "select",
     submitStore: true,
     submitUpdate: true,
@@ -49,7 +49,7 @@ const formSettings = [
   },
   {
     label: "Role",
-    vModel: 0,
+    value: 0,
     name: "role",
     type: "select",
     submitStore: true,
@@ -67,7 +67,7 @@ const formSettings = [
   {
     label: "Updated At",
     name: "updated_at",
-    vModel: "",
+    value: "",
     type: "date",
     submitStore: false,
     submitUpdate: false
@@ -75,11 +75,13 @@ const formSettings = [
   {
     label: "Created At",
     name: "created_at",
-    vModel: "",
+    value: "",
     type: "date",
     submitStore: false,
     submitUpdate: false
   }
 ];
 
-export default () => _.cloneDeep(formSettings);
+export function createFormSchema() {
+  return _.cloneDeep(formSchema);
+}

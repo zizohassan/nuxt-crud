@@ -2,12 +2,12 @@ import Notification from "./notifiaction";
 import Request from "./requests";
 import Delete from "./actions/delete";
 import Update from "./actions/update";
-import PaginationResponse from "./objects/paginateResponse";
-import Loader from "@/components/loading";
+import PaginationResponse from "./responseSchemas/paginateResponse";
+import Loader from "@/components/Loading";
 
 export default ({
   withEdit = true,
-  createEditFormInputs = () => [],
+  createQuickEditFormSchema = () => [],
   withDelete = true,
   tableOption = {}
 } = {}) => ({
@@ -58,7 +58,7 @@ export default ({
       quickEditRow: -1,
       quickEditRequestOptions: {
         id: 0,
-        data: createEditFormInputs()
+        data: createQuickEditFormSchema()
       }
     };
   },
@@ -155,7 +155,7 @@ export default ({
     quickEditDoneEdting(e) {
       this.update(this.quickEditRequestOptions).then(() => {
         this.requestOptions.data.forEach(e => {
-          this.quickEditRow[e.name] = e.vModel;
+          this.quickEditRow[e.name] = e.value;
         });
         this.quickEditDone();
       });
@@ -164,7 +164,7 @@ export default ({
   watch: {
     quickEditRow(row) {
       this.quickEditRequestOptions.data.forEach(element => {
-        element.vModel = row[element.name];
+        element.value = row[element.name];
       });
       this.quickEditRequestOptions.id = row.id;
     }

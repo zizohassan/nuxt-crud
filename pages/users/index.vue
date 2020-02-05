@@ -5,11 +5,11 @@
 
     <Table :defaultProps="defaultProps">
       <template v-slot:quickEdit="{ inputs }">
-        <form @submit.prevent="quickEditDoneEdting">
+        <Form @submit.prevent="quickEditDoneEdting">
           <UserForm :inputs="inputs" :response="response" :quick="true" />
           <SubmitButton />
           <ResetButton />
-        </form>
+        </Form>
       </template>
     </Table>
 
@@ -22,15 +22,15 @@
   </div>
 </template>
 <script>
-import SubmitButton from "@/components/inputs/submit";
-import ResetButton from "@/components/inputs/reset";
-import Table from "~/components/admin/common/table";
-import EditTable from "~/components/admin/common/EditTable";
-import MixinTable from "~/mixin/table";
+import SubmitButton from "@/components/form/Submit";
+import ResetButton from "@/components/form/Reset";
+import Table from "@/components/table/Table";
+import EditTable from "@/components/table/EditTable";
+import MixinTable from "@/mixin/table";
 import moment from "moment";
-import pageHead from "~/components/admin/common/pageHead";
-import UserForm from "@/components/forms";
-import User from "@/objects/admin/forms/users";
+import pageHead from "@/components/PageHead";
+import Form from "@/components/form/Form";
+import { createFormSchema } from "./formSchema";
 
 export default {
   mixins: [
@@ -39,13 +39,13 @@ export default {
         actionsColumnName: "email",
         loaderRef: "loadingTable"
       },
-      createEditFormInputs: User
+      createQuickEditFormSchema: createFormSchema
     })
   ],
   components: {
     Table,
     pageHead,
-    UserForm,
+    Form,
     EditTable
   },
   mounted() {
@@ -84,7 +84,7 @@ export default {
           },
           filter: {
             type: "select",
-            vModel: "",
+            value: "",
             options: [
               { text: "select user status", value: "" },
               { text: "Block", value: 1 },
@@ -102,7 +102,7 @@ export default {
           title: "User Name",
           filter: {
             type: "text",
-            vModel: "",
+            value: "",
             action: val => {
               this.filter("name", val);
             }
@@ -115,7 +115,7 @@ export default {
           title: "Email",
           filter: {
             type: "email",
-            vModel: "",
+            value: "",
             action: val => {
               this.filter("email", val);
             }
@@ -133,7 +133,7 @@ export default {
           },
           filter: {
             type: "date",
-            vModel: null,
+            value: null,
             action: val => {
               this.filter("created_at", val);
             }
@@ -151,7 +151,7 @@ export default {
           },
           filter: {
             type: "date",
-            vModel: null,
+            value: null,
             action: val => {
               this.filter("updated_at", val);
             }
@@ -173,7 +173,7 @@ export default {
           },
           filter: {
             type: "select",
-            vModel: "",
+            value: "",
             options: [
               { text: "select user rol", value: "" },
               { text: "admin", value: 2 },
@@ -189,7 +189,7 @@ export default {
         {
           filter: {
             type: "select",
-            vModel: "",
+            value: "",
             options: [
               { text: "select user status", value: "" },
               { text: "Block", value: 1 },

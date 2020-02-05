@@ -1,45 +1,45 @@
 export default ({ app }, inject) => {
-  inject("_forms", {
-    setValuesToObject,
-    clearObjectValue,
-    transformDataBeforeSubmit
+  inject("_form", {
+    setFormSchemaValues,
+    resetFormSchema,
+    transformSchemaBeforeSubmit
   });
 };
 
-export function setValuesToObject(object, values) {
-  _.forEach(object, function(value) {
-    if (values[value.name]) {
-      value.vModel = values[value.name];
+export function setFormSchemaValues(formSchema, values) {
+  _.forEach(formSchema, function(entry) {
+    if (values[entry.name]) {
+      entry.value = values[entry.name];
     }
   });
 }
 
-export function clearObjectValue(object) {
-  _.forEach(object, function(value) {
-    switch (value.storeType) {
+export function resetFormSchema(formSchema) {
+  _.forEach(formSchema, function(entry) {
+    switch (entry.storeType) {
       case "integer":
-        value.vModel = 0;
+        entry.value = 0;
         break;
       case "string":
-        value.vModel = "";
+        entry.value = "";
         break;
     }
   });
 }
 
-export function transformDataBeforeSubmit(object) {
+export function transformSchemaBeforeSubmit(schema) {
   let transformedData = {};
-  _.forEach(object, function(value) {
-    if (value.submitStore) {
-      let val = value.vModel;
-      if (value.storeType !== undefined) {
-        switch (value.storeType) {
+  _.forEach(schema, function(entry) {
+    if (entry.submitStore) {
+      let val = entry.value;
+      if (entry.storeType !== undefined) {
+        switch (entry.storeType) {
           case "integer":
             val = parseInt(val);
             break;
         }
       }
-      transformedData[value.name] = val;
+      transformedData[entry.name] = val;
     }
   });
   return transformedData;

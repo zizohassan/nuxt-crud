@@ -6,10 +6,15 @@
         <a
           href
           @click.prevent="defaultProps.sorting(header.name)"
-          :class="defaultProps.tableOption.sortKey === header.name ? 'active': ''"
+          :class="
+            defaultProps.tableOption.sortKey === header.name ? 'active' : ''
+          "
         >
           <span
-            v-if="defaultProps.tableOption.sortKey === header.name && defaultProps.tableOption.sortValue === 'asc'"
+            v-if="
+              defaultProps.tableOption.sortKey === header.name &&
+                defaultProps.tableOption.sortValue === 'asc'
+            "
           >
             <i class="fa fa-arrow-circle-down"></i>
           </span>
@@ -19,7 +24,11 @@
         </a>
       </template>
       <template
-        v-if="header.filter !== undefined && defaultProps.tableOption.filterPosition === 'inside-table' && loadType === 'table'"
+        v-if="
+          header.filter !== undefined &&
+            defaultProps.tableOption.filterPosition === 'inside-table' &&
+            loadType === 'table'
+        "
       >
         <filters :header="header" />
       </template>
@@ -27,7 +36,7 @@
   </span>
 </template>
 <script>
-import Filters from "../filters";
+import Filters from "./filter/Filter";
 
 export default {
   props: {
