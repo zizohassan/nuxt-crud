@@ -16,11 +16,11 @@ import { createFormSchema } from "./formSchema";
 import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 //mixin
-import Store from "@/mixin/actions/store";
+import CreateMinxin from "@/mixin/crud/create";
 import pageHead from "@/components/PageHead";
 
 export default {
-  mixins: [Store],
+  mixins: [CreateMinxin],
   components: {
     pageHead,
     Form,
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     storeData() {
-      this.store()
+      this.create()
         .then(res => {
           this.$router.push("/" + this.moduleName);
         })

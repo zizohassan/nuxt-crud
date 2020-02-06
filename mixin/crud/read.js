@@ -21,7 +21,7 @@ export default {
     };
   },
   methods: {
-    find(requestOptions) {
+    read(requestOptions) {
       if (this.$_.isSet(requestOptions)) {
         this.requestOptions = requestOptions;
       }

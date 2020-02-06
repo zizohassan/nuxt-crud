@@ -16,12 +16,12 @@ import { createFormSchema } from "../formSchema";
 import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 /////mixin
-import Show from "@/mixin/actions/show";
+import ReadMinxin from "@/mixin/crud/read";
 import Update from "@/mixin/actions/update";
 import PageHead from "@/components/PageHead";
 
 export default {
-  mixins: [Show, Update],
+  mixins: [ReadMinxin, Update],
   components: {
     PageHead,
     Form,
@@ -53,7 +53,7 @@ export default {
     };
   },
   mounted() {
-    this.find().then(res => {
+    this.read().then(res => {
       this.response = res;
       this.$_form.setFormSchemaValues(this.requestOptions.data, res.payload);
     });

@@ -21,7 +21,7 @@ export default {
     };
   },
   methods: {
-    store(requestOptions) {
+    create(requestOptions) {
       if (this.$_.isSet(requestOptions)) {
         this.requestOptions = requestOptions;
       }

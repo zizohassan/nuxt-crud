@@ -12,6 +12,9 @@ export default ({
 } = {}) => ({
   components: { Loader },
   mixins: [Notification, Request, Delete, Update],
+  mounted() {
+    console.log(this.response);
+  },
   computed: {
     defaultProps() {
       return {
@@ -105,9 +108,9 @@ export default ({
               this.response = res;
               resolve(res);
             })
-            .catch(res => {
-              this.response = res;
-              reject(res);
+            .catch(err => {
+              if (err.name !== "TypeError") this.response = res;
+              reject(err);
             });
         });
       }, 400);
