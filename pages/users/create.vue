@@ -12,7 +12,7 @@
 </template>
 <script>
 import Form from "@/components/form/Form";
-import { createFormSchema } from "./formSchema";
+import { createFormSchema } from "./-formSchema";
 import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 //mixin

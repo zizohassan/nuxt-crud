@@ -12,16 +12,16 @@
 </template>
 <script>
 import Form from "@/components/form/Form";
-import { createFormSchema } from "../formSchema";
+import { createFormSchema } from "../-formSchema";
 import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 /////mixin
 import ReadMinxin from "@/mixin/crud/read";
-import Update from "@/mixin/actions/update";
+import UpdateMixin from "@/mixin/crud/update";
 import PageHead from "@/components/PageHead";
 
 export default {
-  mixins: [ReadMinxin, Update],
+  mixins: [ReadMinxin, UpdateMixin],
   components: {
     PageHead,
     Form,

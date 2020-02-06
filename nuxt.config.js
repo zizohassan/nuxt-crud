@@ -61,7 +61,8 @@ export default {
     plugins: [
       new webpack.ProvidePlugin({
         // global modules
-        _: "lodash"
+        _: "lodash",
+        moment: "moment"
       })
     ],
     /*

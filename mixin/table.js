@@ -1,7 +1,7 @@
 import Notification from "./notifiaction";
 import Request from "./requests";
-import Delete from "./actions/delete";
-import Update from "./actions/update";
+import DeleteMixin from "./crud/delete";
+import UpdateMixin from "./crud/update";
 import Loader from "@/components/Loading";
 
 export default ({
@@ -11,7 +11,7 @@ export default ({
   tableOption = {}
 } = {}) => ({
   components: { Loader },
-  mixins: [Notification, Request, Delete, Update],
+  mixins: [Notification, Request, DeleteMixin, UpdateMixin],
   mounted() {
     console.log(this.response);
   },
