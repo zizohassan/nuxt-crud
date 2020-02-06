@@ -18,11 +18,10 @@ import ResetButton from "@/components/form/Reset";
 /////mixin
 import Show from "@/mixin/actions/show";
 import Update from "@/mixin/actions/update";
-import Response from "@/mixin/responseSchemas/normalResponse";
 import PageHead from "@/components/PageHead";
 
 export default {
-  mixins: [Show, Update, Response],
+  mixins: [Show, Update],
   components: {
     PageHead,
     Form,
@@ -31,6 +30,7 @@ export default {
   },
   data() {
     return {
+      ...this.$_createResponse(),
       pageHead: {
         pageTitle: "Update User"
       },

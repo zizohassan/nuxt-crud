@@ -17,11 +17,10 @@ import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 //mixin
 import Store from "@/mixin/actions/store";
-import Response from "@/mixin/responseSchemas/normalResponse";
 import pageHead from "@/components/PageHead";
 
 export default {
-  mixins: [Store, Response],
+  mixins: [Store],
   components: {
     pageHead,
     Form,
@@ -30,6 +29,7 @@ export default {
   },
   data() {
     return {
+      ...this.$_createResponse(),
       pageHead: {
         pageTitle: "Create User"
       },

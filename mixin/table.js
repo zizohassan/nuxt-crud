@@ -2,7 +2,6 @@ import Notification from "./notifiaction";
 import Request from "./requests";
 import Delete from "./actions/delete";
 import Update from "./actions/update";
-import PaginationResponse from "./responseSchemas/paginateResponse";
 import Loader from "@/components/Loading";
 
 export default ({
@@ -12,7 +11,7 @@ export default ({
   tableOption = {}
 } = {}) => ({
   components: { Loader },
-  mixins: [Notification, Request, Delete, Update, PaginationResponse],
+  mixins: [Notification, Request, Delete, Update],
   computed: {
     defaultProps() {
       return {
@@ -60,7 +59,9 @@ export default ({
       quickEditRequestOptions: {
         id: 0,
         data: createQuickEditFormSchema()
-      }
+      },
+      ...this.$_createResponse({ withPagination: true }),
+      ...this.$_createResponse({ attr: "quickEditResponse" })
     };
   },
   methods: {
@@ -99,7 +100,7 @@ export default ({
             query: this.queries
           });
           ////
-          this.$_get(options, true)
+          this.$_get(options, { showGlobalLoader: true })
             .then(res => {
               this.response = res;
               resolve(res);
