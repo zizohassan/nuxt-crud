@@ -4,8 +4,8 @@
     <a href @click.prevent="activeAll">Active All</a>
 
     <Table :defaultProps="defaultProps" />
-
     <EditTable :defaultProps="defaultProps"></EditTable>
+
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->
     <!--      <template v-slot:customFilter>-->

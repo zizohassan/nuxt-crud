@@ -17,16 +17,17 @@
     <div v-if="error && error[input.name]">
       <b-message type="is-danger" has-icon>
         <ul>
-          <li v-for="(err, index) in error[input.name]">
-            {{ err }}
-          </li>
+          <li v-for="(err, index) in error[input.name]">{{ err }}</li>
         </ul>
       </b-message>
     </div>
   </div>
 </template>
 <script>
+import InputErrorMixin from "@/mixin/inputErrors";
+
 export default {
-  props: ["input", "error"]
+  props: ["input"],
+  mixins: [InputErrorMixin]
 };
 </script>

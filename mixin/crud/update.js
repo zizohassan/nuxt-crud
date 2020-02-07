@@ -45,6 +45,8 @@ export default {
               resolve(res);
             })
             .catch(res => {
+              /// emit errors to event bus
+              this.$bus.$emit("input-errors", res.errors);
               reject(res);
             });
         }

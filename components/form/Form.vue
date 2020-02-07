@@ -1,20 +1,17 @@
 <template>
   <div>
-    <div
-      v-for="singleInput in quick ? quickInputs : inputs"
-      :key="singleInput.name"
-    >
+    <div v-for="singleInput in quick ? quickInputs : inputs" :key="singleInput.name">
       <div v-if="singleInput.type === 'text'">
-        <TextInput :input="singleInput" :error="response.errors" />
+        <TextInput :input="singleInput" />
       </div>
       <div v-else-if="singleInput.type === 'password'">
-        <PasswordInput :input="singleInput" :error="response.errors" />
+        <PasswordInput :input="singleInput" />
       </div>
       <div v-else-if="singleInput.type === 'email'">
-        <EmailInput :input="singleInput" :error="response.errors" />
+        <EmailInput :input="singleInput" />
       </div>
       <div v-else-if="singleInput.type === 'select'">
-        <SelectInput :input="singleInput" :error="response.errors" />
+        <SelectInput :input="singleInput" />
       </div>
     </div>
   </div>

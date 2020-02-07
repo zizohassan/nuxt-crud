@@ -30,9 +30,6 @@ export default {
     SubmitButton,
     ResetButton,
     Form
-  },
-  mounted() {
-    console.log("SADDDDDDDDDDDDDDDDDDDDD", this.defaultProps.quickEditRow);
   }
 };
 </script>

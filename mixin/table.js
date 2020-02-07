@@ -130,7 +130,6 @@ export default ({
     },
     changePage(page) {
       // this.response.payload.page = page;
-      console.log(page);
       this.queries.page = page;
       this.loadData();
     },

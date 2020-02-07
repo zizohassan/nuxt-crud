@@ -40,7 +40,7 @@ const requestCreator = promiseFunction =>
         return res.data;
       })
       .catch(res => {
-        return res.response.data;
+        throw res.response.data;
       })
       .finally(res => {
         if (showGlobalLoader) loadingObj.close();

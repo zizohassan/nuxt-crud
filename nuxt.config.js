@@ -39,7 +39,8 @@ export default {
     "@/plugins/toast.js",
     "@/plugins/helpers.js",
     "@/plugins/form.js",
-    "@/plugins/responses.js"
+    "@/plugins/responses.js",
+    "@/plugins/bus.js"
   ],
   /*
    ** Nuxt.js dev-modules
