@@ -1,7 +1,11 @@
-export function createResponse({ attr = "response", withPagination = false }) {
+export function createResponse(options) {
+  let defOptions = options;
+  if (options === undefined) {
+    defOptions = { attr: "response", withPagination: false };
+  }
   return {
-    [attr]: {
-      payload: withPagination
+    [defOptions.attr]: {
+      payload: defOptions.withPagination
         ? {
             records: [],
             total_record: 0,

@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      ...this.$_createResponse({ attr: "response", withPagination: true }),
       row: {},
       pageHead: {
         btn: {

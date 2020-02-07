@@ -23,7 +23,7 @@ import PasswordInput from "./InputPassword";
 import SelectInput from "./InputSelect";
 
 export default {
-  props: ["inputs", "response", "quick"],
+  props: ["inputs", "quick"],
   components: {
     TextInput,
     EmailInput,

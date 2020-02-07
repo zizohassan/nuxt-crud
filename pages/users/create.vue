@@ -3,7 +3,7 @@
     <PageHead :pageHead="pageHead" />
     <div>
       <form @submit.prevent="storeData" name="createfolder">
-        <Form :inputs="requestOptions.data" :response="response" />
+        <Form :inputs="requestOptions.data" />
         <SubmitButton />
         <ResetButton />
       </form>
@@ -17,12 +17,12 @@ import SubmitButton from "@/components/form/Submit";
 import ResetButton from "@/components/form/Reset";
 //mixin
 import CreateMinxin from "@/mixin/crud/create";
-import pageHead from "@/components/PageHead";
+import PageHead from "@/components/PageHead";
 
 export default {
   mixins: [CreateMinxin],
   components: {
-    pageHead,
+    PageHead,
     Form,
     SubmitButton,
     ResetButton

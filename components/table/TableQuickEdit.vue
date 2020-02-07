@@ -8,11 +8,7 @@
   >
     <td :colspan="Object.keys(row).length">
       <form @submit.prevent="defaultProps.methods.quickEditDoneEditing">
-        <Form
-          :inputs="defaultProps.quickEditRequestOptions.data"
-          :response="defaultProps.response"
-          :quick="true"
-        />
+        <Form :inputs="defaultProps.quickEditRequestOptions.data" :quick="true" />
         <SubmitButton />
         <ResetButton />
       </form>
