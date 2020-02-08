@@ -47,6 +47,7 @@ import Filters from "./filter/Filter";
 import Pagination from "./TablePagination";
 
 export default {
+  props: ["defaultProps"],
   components: {
     Filters,
     Pagination,
@@ -55,12 +56,14 @@ export default {
     TableBody,
     QuickEdit
   },
-  props: ["defaultProps"],
   data() {
     return {
       selectAllIds: false,
       ids: []
     };
+  },
+  created() {
+    this.$bus.$on("default-props", obj => console.log(obj));
   },
   watch: {
     ids(val) {

@@ -4,7 +4,7 @@
     <a href @click.prevent="activeAll">Active All</a>
 
     <Table :defaultProps="defaultProps" />
-    <EditTable :defaultProps="defaultProps"></EditTable>
+    <EditTable :defaultProps="defaultProps" />
 
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->

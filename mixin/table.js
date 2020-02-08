@@ -12,12 +12,9 @@ export default ({
 } = {}) => ({
   components: { Loader },
   mixins: [Notification, Request, DeleteMixin, UpdateMixin],
-  mounted() {
-    console.log(this.response);
-  },
   computed: {
     defaultProps() {
-      return {
+      let obj = {
         headers: this.headers,
         moduleName: this.moduleName,
         response: this.response,
@@ -33,6 +30,9 @@ export default ({
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
       };
+      console.log("we run computed");
+      this.$bus.$emit("default-props", obj);
+      return obj;
     }
   },
   data() {
@@ -129,7 +129,6 @@ export default ({
       this.loadData();
     },
     changePage(page) {
-      // this.response.payload.page = page;
       this.queries.page = page;
       this.loadData();
     },
