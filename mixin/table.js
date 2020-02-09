@@ -26,12 +26,13 @@ export default ({
         methods: {
           deleteRow: this.deleteRow,
           setQuickEditRow: this.setQuickEditRow,
-          quickEditDoneEditing: this.quickEditDoneEditing
+          quickEditDoneEditing: this.quickEditDoneEditing,
+          setHeaders: this.setHeaders
         },
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
       };
-      this.$bus.$emit("default-props", obj);
+      // this.$bus.$emit("default-props", obj);
       return obj;
     },
     defaultPropsEdit() {
@@ -39,7 +40,7 @@ export default ({
         ...this.defaultProps,
         ...this.editedSchema
       };
-      this.$bus.$emit("default-props", obj);
+      // this.$bus.$emit("default-props", obj);
       return obj;
     }
   },
@@ -189,6 +190,9 @@ export default ({
         headers: this.headers,
         tableSettings: this.tableSettings
       });
+    },
+    setHeaders(newHeaders) {
+      this.editedSchema.headers = newHeaders;
     }
   },
   watch: {

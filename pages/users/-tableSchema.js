@@ -1,4 +1,8 @@
-import { createTableSchema } from "~/utils/tableSchemaHelpers";
+import {
+  createTableSchema,
+  createdAt,
+  updatedAt
+} from "~/utils/tableSchemaHelpers";
 
 const schema = createTableSchema({ moduleName: "users" });
 
@@ -33,6 +37,7 @@ schema.addColumn({
 schema.addColumn({
   name: "role",
   filterType: "select",
+
   filterOptions: [
     { text: "select user rol", value: "" },
     { text: "admin", value: 2 },
@@ -47,28 +52,13 @@ schema.addColumn({
   }
 });
 
+schema.addColumn(createdAt);
+schema.addColumn(updatedAt);
+
 export const get = schema.getTableSchema;
 export const save = schema.saveSchema;
 export const clone = schema.cloneSchema;
 
-// {
-//   name: "created_at",
-//   sort: true,
-//   show: true,
-//   title: "Created At",
-//   render: {
-//     action: val => {
-//       return moment(val).format("YYYY-MM-DD");
-//     }
-//   },
-//   filter: {
-//     type: "date",
-//     value: null,
-//     action: val => {
-//       this.filter("created_at", val);
-//     }
-//   }
-// },
 // {
 //   name: "updated_at",
 //   sort: true,

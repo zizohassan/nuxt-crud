@@ -7,16 +7,26 @@
           <td>
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
-          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
+          <th
+            v-for="(header, index) in defaultProps.headers"
+            :key="header.name + '_' + index"
+          >
             <headers :defaultProps="defaultProps" :header="header" />
           </th>
         </tr>
       </thead>
-      <tbody v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+      <tbody
+        v-for="(row, indexRow) in defaultProps.response.payload.records"
+        :key="row.id"
+      >
         <tr>
           <!-- select box -->
           <td>
-            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
+            <b-checkbox
+              v-model="ids"
+              @input="removeCheck"
+              :native-value="row.id"
+            ></b-checkbox>
           </td>
           <!-- end select box -->
           <td
@@ -35,7 +45,10 @@
         <QuickEdit :defaultProps="defaultProps" :row="row"></QuickEdit>
       </tbody>
     </table>
-    <Pagination :response="defaultProps.response" @changePage="defaultProps.changePage" />
+    <Pagination
+      :response="defaultProps.response"
+      @changePage="defaultProps.changePage"
+    />
   </div>
 </template>
 <script>
@@ -61,9 +74,6 @@ export default {
       selectAllIds: false,
       ids: []
     };
-  },
-  created() {
-    this.$bus.$on("default-props", obj => console.log(obj));
   },
   watch: {
     ids(val) {

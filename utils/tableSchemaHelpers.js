@@ -62,15 +62,17 @@ export function createTableSchema({
     },
     align = "center"
   }) {
-    const persistedColumn =
-      persistedSchema.columns.find(col => col.name === name) || {};
+    const persistedColumnIndex = persistedSchema.columns.findIndex(
+      col => col.name === name
+    );
+    const persistedColumn = persistedSchema.columns[persistedColumnIndex] || {};
+
     const column = {
       name,
       sort: persistedColumn.sort === undefined ? sort : persistedColumn.sort,
       show: persistedColumn.show === undefined ? show : persistedColumn.show,
       title: persistedColumn.title || title,
       align: persistedColumn.align || align,
-      index: persistedColumn.index || tableSchema.columns.length,
       render: {
         renderFunction,
         type: renderType
@@ -87,7 +89,9 @@ export function createTableSchema({
       }
     };
 
-    tableSchema.columns.push(column);
+    if (persistedColumnIndex !== -1)
+      tableSchema.columns[persistedColumnIndex] = column;
+    else tableSchema.columns.push(column);
     return column;
   }
 }
@@ -104,3 +108,23 @@ function getPersistenceObject(column) {
     showFilter: show
   };
 }
+
+export const createdAt = {
+  name: "created_at",
+  title: "Created At",
+  renderFunction: val => {
+    return moment(val).format("YYYY-MM-DD");
+  },
+  filterType: "date",
+  defaultFilterValue: null
+};
+
+export const updatedAt = {
+  name: "updated_at",
+  title: "Updated At",
+  renderFunction: val => {
+    return moment(val).format("YYYY-MM-DD");
+  },
+  filterType: "date",
+  defaultFilterValue: null
+};

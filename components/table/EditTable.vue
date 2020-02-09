@@ -2,28 +2,17 @@
   <div>
     <table>
       <thead>
-        <Draggable v-model="headersArray" tag="tr">
-          <th>
-            <b-checkbox></b-checkbox>
-          </th>
-          <th
-            v-for="(header, index) in defaultProps.headers"
-            :key="header.name + '_' + index"
-            scope="col"
-          >
+        <Draggable v-model="arr" tag="tr" @change="onChange">
+          <th v-for="(header, index) in arr" :key="header.name" scope="col">
             <headers
               :defaultProps="defaultProps"
               :header="header"
               loadType="edit-mode"
             />
             <div>
-              <b-checkbox v-model="defaultProps.headers[index].sort"
-                >show sort</b-checkbox
-              >
-              <b-checkbox v-model="defaultProps.headers[index].show"
-                >show column</b-checkbox
-              >
-              <b-checkbox v-model="defaultProps.headers[index].filter.show"
+              <b-checkbox v-model="arr[index].sort">show sort</b-checkbox>
+              <b-checkbox v-model="arr[index].show">show column</b-checkbox>
+              <b-checkbox v-model="arr[index].filter.show"
                 >show filter</b-checkbox
               >
             </div>
@@ -40,10 +29,7 @@
             <b-checkbox :native-value="row.id"></b-checkbox>
           </td>
           <!-- end select box -->
-          <td
-            v-for="(header, indexHeader) in defaultProps.headers"
-            :key="header.name"
-          >
+          <td v-for="(header, indexHeader) in arr" :key="header.name">
             <TableBody
               :defaultProps="defaultProps"
               :row="row"
@@ -73,19 +59,19 @@ export default {
   props: ["defaultProps"],
   data() {
     return {
-      headersArray: []
+      arr: [...this.defaultProps.headers]
     };
   },
-  created() {
-    console.log(this.defaultProps.headers);
-    this.$bus.$on("default-props", obj => console.log(obj));
-  },
-  watch: {
-    "defaultProps.headers"(val) {
-      console.log(val);
-      val.forEach(element => {
-        this.headersArray.push(element.name);
-      });
+  methods: {
+    onChange({ moved: { oldIndex, newIndex } }) {
+      console.log(oldIndex, newIndex);
+      this.defaultProps.methods.setHeaders(this.arr);
+      console.log(this.defaultProps.headers);
+      // this.defaultProps.headers[oldIndex].index = this.defaultProps.headers[
+      //   newIndex
+      // ].index;
+      // this.defaultProps.headers[newIndex].index = temp;
+      // this.defaultProps.headers.sort((a, b) => a.index - b.index);
     }
   }
 };
