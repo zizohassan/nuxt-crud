@@ -8,9 +8,16 @@
   >
     <td :colspan="Object.keys(row).length">
       <form @submit.prevent="defaultProps.methods.quickEditDoneEditing">
-        <Form :inputs="defaultProps.quickEditRequestOptions.data" :quick="true" />
+        <Form
+          :inputs="defaultProps.quickEditRequestOptions.data"
+          :quick="true"
+        />
         <SubmitButton />
-        <ResetButton />
+        <b-button
+          type="is-danger"
+          @click="defaultProps.methods.setQuickEditRow(-1)"
+          >Cancel</b-button
+        >
       </form>
     </td>
   </tr>
