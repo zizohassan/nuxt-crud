@@ -2,9 +2,14 @@
   <div>
     <PageHead :pageHead="pageHead" />
     <a href @click.prevent="activeAll">Active All</a>
+    <template v-if="tableEditing">
+      <b-button @click="doneEditingTable"> Save </b-button>
+      <b-button @click="toggleEditTable"> Cancel </b-button>
+    </template>
+    <b-button v-else @click="toggleEditTable"> Edit </b-button>
 
-    <Table :defaultProps="defaultProps" />
-    <EditTable :defaultProps="defaultProps" />
+    <EditTable v-if="tableEditing" :defaultProps="defaultPropsEdit" />
+    <Table v-else :defaultProps="defaultProps" />
 
     <!--    custom filter-->
     <!--     table option must have this attr with this value to allow slots-->
@@ -20,11 +25,12 @@ import MixinTable from "@/mixin/table";
 import moment from "moment";
 import PageHead from "@/components/PageHead";
 import { createFormSchema } from "./-formSchema";
-import { tableSchema } from "./-tableSchema";
+import * as tableSchema from "./-tableSchema";
 
 export default {
   mixins: [
     MixinTable({
+      tableSchema,
       tableOption: {
         actionsColumnName: "email",
         loaderRef: "loadingTable"
@@ -47,7 +53,7 @@ export default {
   },
   data() {
     return {
-      ...this.$_createResponse({ attr: "response", withPagination: true }),
+      tableEditing: false,
       row: {},
       pageHead: {
         btn: {
@@ -57,7 +63,6 @@ export default {
         pageTitle: "Users"
       },
       moduleName: "users",
-      headers: tableSchema,
       customFilter: [
         {
           filter: {

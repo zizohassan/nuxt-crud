@@ -25,7 +25,7 @@
       </template>
       <template
         v-if="
-          header.filter !== undefined &&
+          header.filter.show &&
             defaultProps.tableOption.filterPosition === 'inside-table' &&
             loadType === 'table'
         "

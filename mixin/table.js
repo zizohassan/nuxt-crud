@@ -5,6 +5,7 @@ import UpdateMixin from "./crud/update";
 import Loader from "@/components/Loading";
 
 export default ({
+  tableSchema,
   withEdit = true,
   createQuickEditFormSchema = () => [],
   withDelete = true,
@@ -30,13 +31,21 @@ export default ({
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
       };
-      console.log("we run computed");
+      this.$bus.$emit("default-props", obj);
+      return obj;
+    },
+    defaultPropsEdit() {
+      let obj = {
+        ...this.defaultProps,
+        ...this.editedSchema
+      };
       this.$bus.$emit("default-props", obj);
       return obj;
     }
   },
   data() {
     return {
+      ...this.$_createResponse({ attr: "response", withPagination: true }),
       adminUrl: process.env.adminUrl,
       //////table
       tableOption: {
@@ -54,7 +63,8 @@ export default ({
       /////default actions
       moduleName: "",
       ///index
-      headers: [],
+      ...tableSchema.get(this),
+      editedSchema: tableSchema.clone(),
       ids: [],
       customFilter: [],
       queries: {},
@@ -161,6 +171,23 @@ export default ({
           this.quickEditRow[e.name] = e.value;
         });
         this.quickEditDone();
+      });
+    },
+    toggleEditTable() {
+      this.editedSchema = tableSchema.clone({
+        headers: this.headers,
+        tableSettings: this.tableSettings
+      });
+      this.tableEditing = !this.tableEditing;
+    },
+    doneEditingTable() {
+      this.headers = this.editedSchema.headers;
+      this.tableSettings = this.editedSchema.tableSettings;
+      this.toggleEditTable();
+      console.log(this.headers);
+      tableSchema.save({
+        headers: this.headers,
+        tableSettings: this.tableSettings
       });
     }
   },

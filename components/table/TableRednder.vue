@@ -4,10 +4,10 @@
       <template
         v-if="header.render !== undefined && header.render.type === 'html'"
       >
-        <span v-html="header.render.action(column[header.name])"></span>
+        <span v-html="header.render.renderFunction(column[header.name])"></span>
       </template>
       <template v-else>
-        {{ header.render.action(column[header.name]) }}
+        {{ header.render.renderFunction(column[header.name]) }}
       </template>
     </template>
     <template v-else>

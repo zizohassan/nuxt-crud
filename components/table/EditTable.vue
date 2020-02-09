@@ -11,26 +11,39 @@
             :key="header.name + '_' + index"
             scope="col"
           >
-            <headers :defaultProps="defaultProps" :header="header" loadType="edit-mode" />
+            <headers
+              :defaultProps="defaultProps"
+              :header="header"
+              loadType="edit-mode"
+            />
             <div>
-              <b-checkbox v-model="defaultProps.headers[index].sort">show sort</b-checkbox>
-              <b-checkbox v-model="defaultProps.headers[index].show">show column</b-checkbox>
-              <b-checkbox
-                v-model="defaultProps.headers[index].filter"
-                :native-value="undefined"
-              >show filter</b-checkbox>
+              <b-checkbox v-model="defaultProps.headers[index].sort"
+                >show sort</b-checkbox
+              >
+              <b-checkbox v-model="defaultProps.headers[index].show"
+                >show column</b-checkbox
+              >
+              <b-checkbox v-model="defaultProps.headers[index].filter.show"
+                >show filter</b-checkbox
+              >
             </div>
           </th>
         </Draggable>
       </thead>
-      <tbody v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+      <tbody
+        v-for="(row, indexRow) in defaultProps.response.payload.records"
+        :key="row.id"
+      >
         <tr>
           <!-- select box -->
           <td>
             <b-checkbox :native-value="row.id"></b-checkbox>
           </td>
           <!-- end select box -->
-          <td v-for="(header, indexHeader) in defaultProps.headers" :key="header.name">
+          <td
+            v-for="(header, indexHeader) in defaultProps.headers"
+            :key="header.name"
+          >
             <TableBody
               :defaultProps="defaultProps"
               :row="row"
@@ -64,10 +77,12 @@ export default {
     };
   },
   created() {
+    console.log(this.defaultProps.headers);
     this.$bus.$on("default-props", obj => console.log(obj));
   },
   watch: {
     "defaultProps.headers"(val) {
+      console.log(val);
       val.forEach(element => {
         this.headersArray.push(element.name);
       });
