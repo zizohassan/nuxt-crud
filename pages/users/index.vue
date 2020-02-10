@@ -2,11 +2,6 @@
   <div>
     <PageHead :pageHead="pageHead" />
     <a href @click.prevent="activeAll">Active All</a>
-    <template v-if="tableEditing">
-      <b-button @click="doneEditingTable"> Save </b-button>
-      <b-button @click="toggleEditTable"> Cancel </b-button>
-    </template>
-    <b-button v-else @click="toggleEditTable"> Edit </b-button>
 
     <EditTable v-if="tableEditing" :defaultProps="defaultPropsEdit" />
     <Table v-else :defaultProps="defaultProps" />
@@ -53,7 +48,6 @@ export default {
   },
   data() {
     return {
-      tableEditing: false,
       row: {},
       pageHead: {
         btn: {

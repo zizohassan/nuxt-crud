@@ -27,7 +27,9 @@ export default ({
           deleteRow: this.deleteRow,
           setQuickEditRow: this.setQuickEditRow,
           quickEditDoneEditing: this.quickEditDoneEditing,
-          setHeaders: this.setHeaders
+          setHeaders: this.setHeaders,
+          toggleEditTable: this.toggleEditTable,
+          doneEditingTable: this.doneEditingTable
         },
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
@@ -46,6 +48,7 @@ export default ({
   },
   data() {
     return {
+      tableEditing: false,
       ...this.$_createResponse({ attr: "response", withPagination: true }),
       adminUrl: process.env.adminUrl,
       //////table
@@ -185,7 +188,6 @@ export default ({
       this.headers = this.editedSchema.headers;
       this.tableSettings = this.editedSchema.tableSettings;
       this.toggleEditTable();
-      console.log(this.headers);
       tableSchema.save({
         headers: this.headers,
         tableSettings: this.tableSettings

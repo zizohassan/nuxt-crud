@@ -1,0 +1,7 @@
+div [lang="en"] {
+  direction: ltr;
+}
+
+div [lang="ar"] {
+  direction: rtl;
+}

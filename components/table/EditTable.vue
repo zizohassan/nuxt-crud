@@ -1,5 +1,7 @@
 <template>
   <div>
+    <b-button @click="defaultProps.methods.doneEditingTable"> Save </b-button>
+    <b-button @click="defaultProps.methods.toggleEditTable"> Cancel </b-button>
     <table>
       <thead>
         <Draggable v-model="arr" tag="tr" @change="onChange">

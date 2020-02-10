@@ -30,7 +30,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["@/assets/css/main.css"],
   /*
    ** Plugins to load before mounting the App
    */
@@ -40,7 +40,8 @@ export default {
     "@/plugins/helpers.js",
     "@/plugins/form.js",
     "@/plugins/responses.js",
-    "@/plugins/bus.js"
+    "@/plugins/bus.js",
+    "@/plugins/language.js"
   ],
   /*
    ** Nuxt.js dev-modules

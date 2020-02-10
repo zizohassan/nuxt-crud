@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-button @click="defaultProps.methods.toggleEditTable"> Edit </b-button>
     <outsideFilter :defaultProps="defaultProps" />
     <table>
       <thead>
