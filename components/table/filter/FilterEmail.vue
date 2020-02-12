@@ -7,7 +7,7 @@
       <input
         type="email"
         v-model="header.filter.value"
-        @keyup="header.filter.action(header.filter.value)"
+        @change="header.filter.action(header.filter.value)"
       />
     </template>
   </div>
