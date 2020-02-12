@@ -16,6 +16,8 @@
 </template>
 <script>
 export default {
-  props: ["pageHead"],
+  props: {
+    pageHead: Object
+  }
 };
 </script>

@@ -23,7 +23,12 @@
 import Filters from "./filter/Filter";
 
 export default {
-  props: ["defaultProps"],
+  props: {
+    defaultProps: {
+      type: Object,
+      required: true
+    }
+  },
   components: {
     Filters
   }

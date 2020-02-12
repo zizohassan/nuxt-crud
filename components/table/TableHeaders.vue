@@ -40,8 +40,8 @@ import Filters from "./filter/Filter";
 
 export default {
   props: {
-    defaultProps: [Object],
-    header: [Object],
+    defaultProps: Object,
+    header: Object,
     loadType: {
       default: "table",
       type: String

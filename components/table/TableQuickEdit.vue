@@ -28,7 +28,16 @@ import ResetButton from "@/components/form/Reset";
 import Form from "@/components/form/Form";
 
 export default {
-  props: ["defaultProps", "row"],
+  props: {
+    defaultProps: {
+      type: Object,
+      required: true
+    },
+    row: {
+      type: Object,
+      required: true
+    }
+  },
   components: {
     SubmitButton,
     ResetButton,

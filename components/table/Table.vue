@@ -63,7 +63,6 @@ import Pagination from "./TablePagination";
 import TableOptions from "./TableOptions";
 
 export default {
-  props: ["defaultProps"],
   components: {
     Filters,
     Pagination,
@@ -73,28 +72,27 @@ export default {
     QuickEdit,
     TableOptions
   },
+  props: ["defaultProps"],
   data() {
     return {
       selectAllIds: false,
-      ids: [],
-      scrollConfig() {
-        if (this.defaultProps.tableSettings.paginationMode == "page") return {};
-        return {
-          "v-infinite-scroll": this.defaultProps.methods.loadData,
-          "infinite-scroll-disabled": "busy",
-          "infinite-scroll-distance": 10
-        };
-      }
+      ids: []
     };
   },
-  computed: {},
+  computed: {
+    scrollConfig() {
+      if (this.defaultProps.tableSettings.paginationMode == "page") return {};
+      return {
+        "v-infinite-scroll": this.defaultProps.methods.loadData,
+        "infinite-scroll-disabled": "busy",
+        "infinite-scroll-distance": 10
+      };
+    }
+  },
   watch: {
     ids(val) {
       this.defaultProps.setIds(val);
     }
-  },
-  mounted() {
-    console.log(this.defaultProps);
   },
   methods: {
     removeCheck() {

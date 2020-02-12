@@ -20,13 +20,15 @@ import CreateMinxin from "@/mixin/crud/create";
 import PageHead from "@/components/PageHead";
 
 export default {
-  mixins: [CreateMinxin],
   components: {
     PageHead,
     Form,
     SubmitButton,
     ResetButton
   },
+
+  mixins: [CreateMinxin],
+
   data() {
     return {
       ...this.$_createResponse(),
@@ -50,6 +52,7 @@ export default {
       ]
     };
   },
+
   methods: {
     storeData() {
       this.create()

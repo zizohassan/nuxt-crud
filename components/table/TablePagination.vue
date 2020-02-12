@@ -18,12 +18,17 @@
   </b-pagination>
 </template>
 <script>
-  export default {
-    props: ["response"],
-    methods: {
-      changePage(value) {
-        this.$emit("changePage", value)
-      }
+export default {
+  props: {
+    response: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    changePage(value) {
+      this.$emit("changePage", value);
     }
   }
+};
 </script>

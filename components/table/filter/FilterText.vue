@@ -7,7 +7,7 @@
       <input
         type="text"
         v-model="header.filter.value"
-        @change="header.filter.action(header.filter.value)"
+        @input="header.filter.action(header.filter.value)"
       />
     </template>
   </div>

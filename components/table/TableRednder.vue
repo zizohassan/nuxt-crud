@@ -17,6 +17,6 @@
 </template>
 <script>
 export default {
-  props: ["header", "column"]
+  props: { header: Object, column: Object }
 };
 </script>

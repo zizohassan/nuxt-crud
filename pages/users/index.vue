@@ -23,6 +23,12 @@ import { createFormSchema } from "./-formSchema";
 import * as tableSchema from "./-tableSchema";
 
 export default {
+  components: {
+    Table,
+    PageHead,
+    EditTable
+  },
+
   mixins: [
     MixinTable({
       tableSchema,
@@ -33,19 +39,7 @@ export default {
       createQuickEditFormSchema: createFormSchema
     })
   ],
-  components: {
-    Table,
-    PageHead,
-    EditTable
-  },
-  mounted() {
-    this.loadData();
-  },
-  methods: {
-    activeAll() {
-      console.log("do some thing with ids", this.ids);
-    }
-  },
+
   data() {
     return {
       row: {},
@@ -74,6 +68,16 @@ export default {
         }
       ]
     };
+  },
+
+  mounted() {
+    this.loadData();
+  },
+
+  methods: {
+    activeAll() {
+      console.log("do some thing with ids", this.ids);
+    }
   }
 };
 </script>

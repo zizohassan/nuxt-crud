@@ -7,14 +7,19 @@
       <input
         type="email"
         v-model="header.filter.value"
-        @change="header.filter.action(header.filter.value)"
+        @input="header.filter.action(header.filter.value)"
       />
     </template>
   </div>
 </template>
 <script>
 export default {
-  props: ["header"],
+  props: {
+    header: {
+      type: Object,
+      required: true
+    }
+  },
   mounted() {
     if (this.$route.query[this.header.name] !== undefined) {
       this.header.filter.value = this.$route.query[this.header.name];

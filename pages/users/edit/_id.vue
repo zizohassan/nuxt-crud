@@ -21,13 +21,15 @@ import UpdateMixin from "@/mixin/crud/update";
 import PageHead from "@/components/PageHead";
 
 export default {
-  mixins: [ReadMinxin, UpdateMixin],
   components: {
     PageHead,
     Form,
     SubmitButton,
     ResetButton
   },
+
+  mixins: [ReadMinxin, UpdateMixin],
+
   data() {
     return {
       ...this.$_createResponse(),
@@ -52,12 +54,14 @@ export default {
       }
     };
   },
+
   mounted() {
     this.read().then(res => {
       this.response = res;
       this.$_form.setFormSchemaValues(this.requestOptions.data, res.payload);
     });
   },
+
   methods: {
     updateData() {
       this.update()
