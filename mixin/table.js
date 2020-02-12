@@ -21,20 +21,24 @@ export default ({
         response: this.response,
         tableOption: this.tableOption,
         sorting: this.sorting,
-        changePage: this.changePage,
         setIds: this.SetIds,
+        tableSettings: this.tableSettings,
         methods: {
           deleteRow: this.deleteRow,
           setQuickEditRow: this.setQuickEditRow,
           quickEditDoneEditing: this.quickEditDoneEditing,
           setHeaders: this.setHeaders,
           toggleEditTable: this.toggleEditTable,
-          doneEditingTable: this.doneEditingTable
+          doneEditingTable: this.doneEditingTable,
+          loadData: this.loadData,
+          changePage: this.changePage,
+          changeLimit: this.changeLimit,
+          setPagingType: this.setPagingType
         },
         quickEditRow: this.quickEditRow,
         quickEditRequestOptions: this.quickEditRequestOptions
       };
-      // this.$bus.$emit("default-props", obj);
+      this.$bus.$emit("default-props", obj);
       return obj;
     },
     defaultPropsEdit() {
@@ -56,7 +60,7 @@ export default ({
         loadingTable: false,
         sortKey: "id",
         sortValue: "desc",
-        filterPosition: "inside-table", /// inside-table or outside-table
+        filterPosition: "outside-table", /// inside-table or outside-table
         editBtn: true,
         deleteBtn: true,
         qeditBtn: true,
@@ -81,6 +85,20 @@ export default ({
       ...this.$_createResponse({ attr: "quickEditResponse" })
     };
   },
+  mounted() {
+    console.log();
+    /*     console.log();
+    if (localStorage.getItem(`${this.moduleName}__tableSchema`)) {
+      const tableSchema = JSON.parse(
+        localStorage.getItem(`${this.moduleName}__tableSchema`)
+      );
+      this.headers = tableSchema.columns;
+      this.tableSettings = tableSchema.tableSettings;
+    } else {
+      localStorage.setItem(`${this.moduleName}__tableSchema`) ||
+        `{"columns":[]}`;
+    } */
+  },
   methods: {
     setDefaultQueryString() {
       let loadingQuery = this.$route.query;
@@ -97,36 +115,61 @@ export default ({
       };
       this.queries = merge;
     },
-    loadData() {
+    loadData($state) {
       if (this.__timeout) clearTimeout(this.__timeout);
       this.__timeout = setTimeout(() => {
         /// first set the default query string
         this.setDefaultQueryString();
-        return new Promise((resolve, reject) => {
-          let options = {
-            url:
-              this.adminUrl +
-              "/" +
-              this.moduleName +
-              "?" +
-              this.appendQueryStringToApiCall(),
-            loaderRef: this.tableOption.loaderRef
-          };
-          ///then now append all query strings with filters
-          this.$router.push({
-            query: this.queries
-          });
-          ////
-          this.$_get(options, { showGlobalLoader: true })
-            .then(res => {
-              this.response = res;
-              resolve(res);
-            })
-            .catch(err => {
-              if (err.name !== "TypeError") this.response = res;
-              reject(err);
+        /// check if we get outof range page (scroll fix)
+        if (
+          this.response.payload.total_page >= this.response.payload.page ||
+          this.response.payload.total_page == 0
+        ) {
+          return new Promise((resolve, reject) => {
+            let options = {
+              url:
+                this.adminUrl +
+                this.moduleName +
+                "?" +
+                this.appendQueryStringToApiCall(),
+              loaderRef: this.tableOption.loaderRef
+            };
+            ///then now append all query strings with filters
+            this.$router.push({
+              query: this.queries
             });
-        });
+            this.$_get(options, { showGlobalLoader: true })
+              .then(res => {
+                /// check if paing type scroll to append data
+                if (this.tableSettings.paginationMode === "scroll") {
+                  if (this.response.payload.page !== 1) {
+                    /// save current data in temp
+                    let data = this.response.payload.records;
+                    /// overwrite the current response
+                    this.response = res;
+                    /// append new data with old data
+                    this.response.payload.records = [
+                      ...this.response.payload.records,
+                      ...data
+                    ];
+                  } else {
+                    this.response = res;
+                  }
+                  /// set the new page after scoll
+                  this.response.payload.page = this.response.payload.page + 1;
+                  /// set query string page
+                  this.queries.page = this.response.payload.page;
+                } else {
+                  this.response = res;
+                }
+                resolve(res);
+              })
+              .catch(err => {
+                if (err.name !== "TypeError") this.response = res;
+                reject(err);
+              });
+          });
+        }
       }, 400);
     },
     sorting(keyName) {
@@ -137,6 +180,7 @@ export default ({
         this.tableOption.sortValue = "desc";
       }
       this.response.payload.page = 1;
+      this.queries.page = 1;
       this.tableOption.sortKey = keyName;
       this.queries.sort =
         this.tableOption.sortKey + "|" + this.tableOption.sortValue;
@@ -157,6 +201,7 @@ export default ({
     },
     filter(key, val) {
       this.queries[key] = val;
+      this.queries.page = 1;
       this.response.payload.page = 1;
       this.loadData();
     },
@@ -195,6 +240,18 @@ export default ({
     },
     setHeaders(newHeaders) {
       this.editedSchema.headers = newHeaders;
+    },
+    changeLimit(limit) {
+      /// to do save limit to local storage
+      this.queries.limit = limit;
+      /*   window.location = window.location.href.split("?")[0]; */
+    },
+    setPagingType(pagingType) {
+      /// Save pageing type in local sotrage
+
+      console.log(this.tableSettings);
+      this.tableSettings.paginationMode = pagingType;
+      //window.location = window.location.href.split("?")[0];
     }
   },
   watch: {

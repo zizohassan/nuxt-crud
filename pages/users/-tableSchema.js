@@ -4,7 +4,9 @@ import {
   updatedAt
 } from "~/utils/tableSchemaHelpers";
 
-const schema = createTableSchema({ moduleName: "users" });
+const schema = createTableSchema({
+  moduleName: "users"
+});
 
 schema.addColumn({
   name: "block",

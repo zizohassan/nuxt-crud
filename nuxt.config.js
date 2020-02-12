@@ -41,7 +41,8 @@ export default {
     "@/plugins/form.js",
     "@/plugins/responses.js",
     "@/plugins/bus.js",
-    "@/plugins/language.js"
+    "@/plugins/language.js",
+    "@/plugins/infiniteLoading.js"
   ],
   /*
    ** Nuxt.js dev-modules

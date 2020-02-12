@@ -1,33 +1,27 @@
 <template>
   <div>
-    <b-button @click="defaultProps.methods.toggleEditTable"> Edit </b-button>
+    <TableOptions :defaultProps="defaultProps" />
     <outsideFilter :defaultProps="defaultProps" />
-    <table>
+    <table
+      v-infinite-scroll="defaultProps.methods.loadData"
+      infinite-scroll-disabled="busy"
+      infinite-scroll-distance="10"
+    >
       <thead>
         <tr>
           <td>
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
-          <th
-            v-for="(header, index) in defaultProps.headers"
-            :key="header.name + '_' + index"
-          >
+          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
             <headers :defaultProps="defaultProps" :header="header" />
           </th>
         </tr>
       </thead>
-      <tbody
-        v-for="(row, indexRow) in defaultProps.response.payload.records"
-        :key="row.id"
-      >
+      <tbody v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
         <tr>
           <!-- select box -->
           <td>
-            <b-checkbox
-              v-model="ids"
-              @input="removeCheck"
-              :native-value="row.id"
-            ></b-checkbox>
+            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
           </td>
           <!-- end select box -->
           <td
@@ -47,8 +41,9 @@
       </tbody>
     </table>
     <Pagination
+      v-if="defaultProps.tableSettings.paginationMode === 'page'"
       :response="defaultProps.response"
-      @changePage="defaultProps.changePage"
+      @changePage="defaultProps.methods.changePage"
     />
   </div>
 </template>
@@ -59,6 +54,7 @@ import QuickEdit from "./TableQuickEdit";
 import Headers from "./TableHeaders";
 import Filters from "./filter/Filter";
 import Pagination from "./TablePagination";
+import TableOptions from "./TableOptions";
 
 export default {
   props: ["defaultProps"],
@@ -68,7 +64,8 @@ export default {
     Headers,
     outsideFilter,
     TableBody,
-    QuickEdit
+    QuickEdit,
+    TableOptions
   },
   data() {
     return {
@@ -80,6 +77,9 @@ export default {
     ids(val) {
       this.defaultProps.setIds(val);
     }
+  },
+  mounted() {
+    console.log(this.defaultProps);
   },
   methods: {
     removeCheck() {

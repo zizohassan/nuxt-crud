@@ -27,7 +27,7 @@ export default {
     MixinTable({
       tableSchema,
       tableOption: {
-        actionsColumnName: "email",
+        actionsColumnName: "name",
         loaderRef: "loadingTable"
       },
       createQuickEditFormSchema: createFormSchema

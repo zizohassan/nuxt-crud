@@ -10,8 +10,6 @@ export default ({ app, store }) => {
   // Set i18n instance on app
   // This way we can use it in middleware and pages asyncData/fetch
 
-  console.log("lang", localeOptions);
-
   const locale =
     localStorage.getItem("currentLanguage") &&
     localeOptions.filter(x => x.id === localStorage.getItem("currentLanguage"))
