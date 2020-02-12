@@ -233,10 +233,7 @@ export default ({
       this.headers = this.editedSchema.headers;
       this.tableSettings = this.editedSchema.tableSettings;
       this.toggleEditTable();
-      tableSchema.save({
-        headers: this.headers,
-        tableSettings: this.tableSettings
-      });
+      this.saveToTableSchema();
     },
     setHeaders(newHeaders) {
       this.editedSchema.headers = newHeaders;
@@ -244,14 +241,22 @@ export default ({
     changeLimit(limit) {
       /// to do save limit to local storage
       this.queries.limit = limit;
-      /*   window.location = window.location.href.split("?")[0]; */
+      this.tableSettings.limit = limit;
+      this.saveToTableSchema();
+      window.location = window.location.pathname;
     },
     setPagingType(pagingType) {
       /// Save pageing type in local sotrage
 
-      console.log(this.tableSettings);
       this.tableSettings.paginationMode = pagingType;
-      //window.location = window.location.href.split("?")[0];
+      this.saveToTableSchema();
+      window.location = window.location.pathname;
+    },
+    saveToTableSchema() {
+      tableSchema.save({
+        headers: this.headers,
+        tableSettings: this.tableSettings
+      });
     }
   },
   watch: {

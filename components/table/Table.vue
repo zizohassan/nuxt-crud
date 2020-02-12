@@ -2,7 +2,13 @@
   <div>
     <TableOptions :defaultProps="defaultProps" />
     <outsideFilter :defaultProps="defaultProps" />
-    <table v-bind="scrollConfig">
+    <table
+      v-infinite-scroll="
+        isScrollMode ? this.defaultProps.methods.loadData : () => {}
+      "
+      infinite-scroll-disabled="busy"
+      infinite-Scroll-distance="10"
+    >
       <thead>
         <tr>
           <td>
@@ -80,13 +86,8 @@ export default {
     };
   },
   computed: {
-    scrollConfig() {
-      if (this.defaultProps.tableSettings.paginationMode == "page") return {};
-      return {
-        "v-infinite-scroll": this.defaultProps.methods.loadData,
-        "infinite-scroll-disabled": "busy",
-        "infinite-scroll-distance": 10
-      };
+    isScrollMode() {
+      return this.defaultProps.tableSettings.paginationMode == "scroll";
     }
   },
   watch: {
