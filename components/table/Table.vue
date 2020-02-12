@@ -2,26 +2,32 @@
   <div>
     <TableOptions :defaultProps="defaultProps" />
     <outsideFilter :defaultProps="defaultProps" />
-    <table
-      v-infinite-scroll="defaultProps.methods.loadData"
-      infinite-scroll-disabled="busy"
-      infinite-scroll-distance="10"
-    >
+    <table v-bind="scrollConfig">
       <thead>
         <tr>
           <td>
             <b-checkbox v-model="selectAllIds" @input="selectAll"></b-checkbox>
           </td>
-          <th v-for="(header, index) in defaultProps.headers" :key="header.name + '_' + index">
+          <th
+            v-for="(header, index) in defaultProps.headers"
+            :key="header.name + '_' + index"
+          >
             <headers :defaultProps="defaultProps" :header="header" />
           </th>
         </tr>
       </thead>
-      <tbody v-for="(row, indexRow) in defaultProps.response.payload.records" :key="row.id">
+      <tbody
+        v-for="(row, indexRow) in defaultProps.response.payload.records"
+        :key="row.id"
+      >
         <tr>
           <!-- select box -->
           <td>
-            <b-checkbox v-model="ids" @input="removeCheck" :native-value="row.id"></b-checkbox>
+            <b-checkbox
+              v-model="ids"
+              @input="removeCheck"
+              :native-value="row.id"
+            ></b-checkbox>
           </td>
           <!-- end select box -->
           <td
@@ -70,9 +76,18 @@ export default {
   data() {
     return {
       selectAllIds: false,
-      ids: []
+      ids: [],
+      scrollConfig() {
+        if (this.defaultProps.tableSettings.paginationMode == "page") return {};
+        return {
+          "v-infinite-scroll": this.defaultProps.methods.loadData,
+          "infinite-scroll-disabled": "busy",
+          "infinite-scroll-distance": 10
+        };
+      }
     };
   },
+  computed: {},
   watch: {
     ids(val) {
       this.defaultProps.setIds(val);
