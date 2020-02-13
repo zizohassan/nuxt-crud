@@ -1,3 +1,17 @@
+import Vue from "vue";
+
+export const responseEventBus = {
+  __eventBus: new Vue(),
+  install(Vue) {
+    Vue.prototype.$_responseEventBus = this.eventBus;
+  },
+  get eventBus() {
+    return this.__eventBus;
+  }
+};
+
+Vue.use(responseEventBus);
+
 export default ({ app }, inject) => {
   inject(
     "_get",
@@ -37,9 +51,11 @@ const requestCreator = promiseFunction =>
 
     return promiseFunction(request)
       .then(res => {
+        this.$_responseEventBus.$emit("SUCCESS", { request, response: res });
         return res.data;
       })
       .catch(res => {
+        this.$_responseEventBus.$emit("FAIL", { request, response: res });
         throw res.response.data;
       })
       .finally(res => {
