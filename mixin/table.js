@@ -86,22 +86,18 @@ export default ({
     };
   },
   mounted() {
-    console.log();
-    /*     console.log();
-    if (localStorage.getItem(`${this.moduleName}__tableSchema`)) {
-      const tableSchema = JSON.parse(
-        localStorage.getItem(`${this.moduleName}__tableSchema`)
-      );
-      this.headers = tableSchema.columns;
-      this.tableSettings = tableSchema.tableSettings;
-    } else {
-      localStorage.setItem(`${this.moduleName}__tableSchema`) ||
-        `{"columns":[]}`;
-    } */
+    let loadingQuery = this.$route.query;
+
+    if (
+      this.tableSettings.paginationMode === "scroll" &&
+      loadingQuery.page !== 1
+    )
+      this.queries.page = 1;
   },
   methods: {
     setDefaultQueryString() {
       let loadingQuery = this.$route.query;
+
       let defaultQuery = {
         sort: "id|desc",
         page: 1,
@@ -120,55 +116,54 @@ export default ({
       this.__timeout = setTimeout(() => {
         /// first set the default query string
         this.setDefaultQueryString();
+
         /// check if we get outof range page (scroll fix)
         if (
           this.response.payload.total_page >= this.response.payload.page ||
           this.response.payload.total_page == 0
         ) {
-          return new Promise((resolve, reject) => {
-            let options = {
-              url:
-                this.adminUrl +
-                this.moduleName +
-                "?" +
-                this.appendQueryStringToApiCall(),
-              loaderRef: this.tableOption.loaderRef
-            };
-            ///then now append all query strings with filters
-            this.$router.push({
-              query: this.queries
-            });
-            this.$_get(options, { showGlobalLoader: true })
-              .then(res => {
-                /// check if paing type scroll to append data
-                if (this.tableSettings.paginationMode === "scroll") {
-                  if (this.response.payload.page !== 1) {
-                    /// save current data in temp
-                    let data = this.response.payload.records;
-                    /// overwrite the current response
-                    this.response = res;
-                    /// append new data with old data
-                    this.response.payload.records = [
-                      ...this.response.payload.records,
-                      ...data
-                    ];
-                  } else {
-                    this.response = res;
-                  }
-                  /// set the new page after scoll
-                  this.response.payload.page = this.response.payload.page + 1;
-                  /// set query string page
-                  this.queries.page = this.response.payload.page;
+          let options = {
+            url:
+              this.adminUrl +
+              this.moduleName +
+              "?" +
+              this.appendQueryStringToApiCall(),
+            loaderRef: this.tableOption.loaderRef
+          };
+          ///then now append all query strings with filters
+          this.$router.push({
+            query: this.queries
+          });
+          this.$_get(options, { showGlobalLoader: true })
+            .then(res => {
+              /// check if pagination type scroll to append data
+              if (this.tableSettings.paginationMode === "scroll") {
+                if (this.response.payload.page !== 1) {
+                  /// save current data in temp
+                  let data = this.response.payload.records;
+                  /// overwrite the current response
+                  this.response = res;
+                  /// append new data with old data
+                  this.response.payload.records = [
+                    ...data,
+                    ...this.response.payload.records
+                  ];
                 } else {
                   this.response = res;
                 }
-                resolve(res);
-              })
-              .catch(err => {
-                if (err.name !== "TypeError") this.response = res;
-                reject(err);
-              });
-          });
+                /// set the new page after scroll
+                this.response.payload.page = this.response.payload.page + 1;
+                /// set query string page
+                this.queries.page = this.response.payload.page;
+              } else {
+                this.response = res;
+              }
+              return res;
+            })
+            .catch(err => {
+              if (err.name !== "TypeError") this.response = err;
+              Promise.reject(err);
+            });
         }
       }, 400);
     },
