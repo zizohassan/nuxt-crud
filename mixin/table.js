@@ -101,7 +101,7 @@ export default ({
       let defaultQuery = {
         sort: "id|desc",
         page: 1,
-        limit: 30
+        limit: this.tableSettings.limit
       };
 
       let merge = {
