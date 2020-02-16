@@ -1,51 +1,27 @@
 <script>
 import { Bar } from "vue-chartjs";
+import { createToolTipConfig, createBarChartData } from "./chartsHelpers";
 
 export default {
   extends: Bar,
-  props: ["data", "options"],
-  data() {
-    return {
-      opt: barChartOptions
-    };
-  },
-  mounted() {
-    // this.opt.scales.yAxes[0].ticks.min = this.options.min;
-    // this.opt.scales.yAxes[0].ticks.max = this.options.max;
-    // this.opt.scales.yAxes[0].ticks.stepSize = this.options.stepSize;
-    this.renderChart({
-      labels: [],
-      datasets: [
-        {
-          label: "HEY",
-          // borderColor: "#000",
-          // backgroundColor: "#FFF",
-          data: [12],
-          borderWidth: 2
-        },
-        {
-          label: "HEY",
-          // borderColor: "#000",
-          // backgroundColor: "#FFF",
-          data: [50],
-          borderWidth: 2
-        }
-      ]
-    });
-  }
-};
 
-const chartTooltip = {
-  backgroundColor: "#fff",
-  titleFontColor: "#000",
-  // borderColor: ThemeColors().separatorColor,
-  borderWidth: 0.5,
-  bodyFontColor: "#000",
-  bodySpacing: 10,
-  xPadding: 15,
-  yPadding: 15,
-  cornerRadius: 0.15,
-  color: "#000"
+  props: {
+    data: {
+      type: Array,
+      required: true
+    },
+    options: {
+      type: Object,
+      required: false
+    }
+  },
+
+  mounted() {
+    this.renderChart(
+      createBarChartData({ data: this.data }),
+      this.options || barChartOptions
+    );
+  }
 };
 
 const barChartOptions = {
@@ -63,7 +39,6 @@ const barChartOptions = {
         },
         ticks: {
           beginAtZero: true,
-
           padding: 20,
           fontFamily: "Cairo , sans-serif"
         }
@@ -81,6 +56,6 @@ const barChartOptions = {
   legend: {
     display: false
   },
-  tooltips: chartTooltip
+  tooltips: createToolTipConfig()
 };
 </script>

@@ -1,6 +1,13 @@
 <template>
   <div>
-    <BarChart />
+    <BarChart
+      :data="[
+        { count: 10, label: 'admins' },
+        { count: 6, label: 'USers' },
+        { count: 7, label: 'OP' },
+        { count: 13, label: 'sfe' }
+      ]"
+    />
     <TableOptions :defaultProps="defaultProps" />
     <OutsideFilter :defaultProps="defaultProps" />
     <TableActions :loadData="defaultProps.methods.loadData" />
