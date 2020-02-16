@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import InputErrorMixin from "@/mixin/inputErrors";
+import InputErrorMixin from "@/mixin/forms/inputErrors";
 
 export default {
   props: ["input"],

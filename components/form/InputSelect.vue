@@ -6,13 +6,18 @@
       :label-for="input.name"
       :description="input.description !== undefined ? input.description : ''"
     >
-      <b-form-select v-model="input.value" :options="input.options" class="mb-3">
+      <b-form-select
+        v-model="input.value"
+        :options="input.options"
+        class="mb-3"
+      >
         <template v-slot:first>
           <b-form-select-option
             :value="input.placeholder.value"
             selectec
             disabled
-          >{{ input.placeholder.text }}</b-form-select-option>
+            >{{ input.placeholder.text }}</b-form-select-option
+          >
         </template>
       </b-form-select>
     </b-form-group>
@@ -26,7 +31,7 @@
   </div>
 </template>
 <script>
-import InputErrorMixin from "@/mixin/inputErrors";
+import InputErrorMixin from "@/mixin/forms/inputErrors";
 
 export default {
   props: ["input"],

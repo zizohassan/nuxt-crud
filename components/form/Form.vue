@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-for="singleInput in quick ? quickInputs : inputs" :key="singleInput.name">
+    <div
+      v-for="singleInput in quick ? quickInputs : inputs"
+      :key="singleInput.name"
+    >
       <div v-if="singleInput.type === 'text'">
         <TextInput :input="singleInput" />
       </div>
@@ -33,6 +36,14 @@ export default {
   computed: {
     quickInputs() {
       return this.inputs.filter(i => i.quick);
+    }
+  },
+  watch: {
+    inputs: {
+      deep: true,
+      handler() {
+        window.dirtyForm = true;
+      }
     }
   }
 };

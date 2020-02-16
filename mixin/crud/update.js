@@ -5,9 +5,10 @@
  */
 
 import Request from "../requests";
+import BeforeLeaveUnsavedChangesMixin from "../forms/beforeLeaveUnsavedChanges";
 
 export default {
-  mixins: [Request],
+  mixins: [Request, BeforeLeaveUnsavedChangesMixin],
   data() {
     return {
       adminUrl: process.env.adminUrl,

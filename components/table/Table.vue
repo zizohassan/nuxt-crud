@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BarChart />
     <TableOptions :defaultProps="defaultProps" />
-    <outsideFilter :defaultProps="defaultProps" />
+    <OutsideFilter :defaultProps="defaultProps" />
+    <TableActions :loadData="defaultProps.methods.loadData" />
     <table
       v-infinite-scroll="
-        isScrollMode ? this.defaultProps.methods.loadData : () => {}
+        isScrollMode ? defaultProps.methods.loadData : () => {}
       "
       infinite-scroll-disabled="busy"
       infinite-Scroll-distance="10"
@@ -60,23 +62,27 @@
   </div>
 </template>
 <script>
-import outsideFilter from "./TableOutsideFilter";
+import OutsideFilter from "./TableOutsideFilter";
 import TableBody from "./TableBody";
 import QuickEdit from "./TableQuickEdit";
 import Headers from "./TableHeaders";
 import Filters from "./filter/Filter";
 import Pagination from "./TablePagination";
 import TableOptions from "./TableOptions";
+import TableActions from "./TableActions";
+import BarChart from "@/components/charts/BarChart";
 
 export default {
   components: {
     Filters,
     Pagination,
     Headers,
-    outsideFilter,
+    OutsideFilter,
     TableBody,
     QuickEdit,
-    TableOptions
+    TableOptions,
+    TableActions,
+    BarChart
   },
   props: ["defaultProps"],
   data() {
