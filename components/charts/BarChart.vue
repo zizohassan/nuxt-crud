@@ -1,6 +1,6 @@
 <script>
 import { Bar } from "vue-chartjs";
-import { createToolTipConfig, createBarChartData } from "./chartsHelpers";
+import { createToolTipConfig, createBarChartData } from "./_chartsHelpers";
 
 export default {
   extends: Bar,

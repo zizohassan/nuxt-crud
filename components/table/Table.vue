@@ -8,6 +8,14 @@
         { count: 13, label: 'sfe' }
       ]"
     />
+    <PieChart
+      :data="[
+        { count: 10, label: 'admins' },
+        { count: 6, label: 'USers' },
+        { count: 7, label: 'OP' },
+        { count: 13, label: 'sfe' }
+      ]"
+    />
     <TableOptions :defaultProps="defaultProps" />
     <OutsideFilter :defaultProps="defaultProps" />
     <TableActions :loadData="defaultProps.methods.loadData" />
@@ -78,6 +86,7 @@ import Pagination from "./TablePagination";
 import TableOptions from "./TableOptions";
 import TableActions from "./TableActions";
 import BarChart from "@/components/charts/BarChart";
+import PieChart from "@/components/charts/PieChart";
 
 export default {
   components: {
@@ -89,7 +98,8 @@ export default {
     QuickEdit,
     TableOptions,
     TableActions,
-    BarChart
+    BarChart,
+    PieChart
   },
   props: ["defaultProps"],
   data() {

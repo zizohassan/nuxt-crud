@@ -35,3 +35,18 @@ export function createToolTipConfig({
     color
   };
 }
+
+export function createPieChartData({ data, ...rest } = {}) {
+  return {
+    labels: data.map(({ label }) => label),
+    datasets: [
+      {
+        data: data.map(({ count }) => count),
+        backgroundColor: colorsArr,
+        ...rest
+      }
+    ]
+  };
+}
+
+const colorsArr = ["#000", "#e51e1e", "#6b269f", "#9de", "#2287"];
