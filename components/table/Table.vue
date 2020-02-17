@@ -1,21 +1,6 @@
 <template>
   <div>
-    <BarChart
-      :data="[
-        { count: 10, label: 'admins' },
-        { count: 6, label: 'USers' },
-        { count: 7, label: 'OP' },
-        { count: 13, label: 'sfe' }
-      ]"
-    />
-    <PieChart
-      :data="[
-        { count: 10, label: 'admins' },
-        { count: 6, label: 'USers' },
-        { count: 7, label: 'OP' },
-        { count: 13, label: 'sfe' }
-      ]"
-    />
+    <TableCharts />
     <TableOptions :defaultProps="defaultProps" />
     <OutsideFilter :defaultProps="defaultProps" />
     <TableActions :loadData="defaultProps.methods.loadData" />
@@ -85,8 +70,7 @@ import Filters from "./filter/Filter";
 import Pagination from "./TablePagination";
 import TableOptions from "./TableOptions";
 import TableActions from "./TableActions";
-import BarChart from "@/components/charts/BarChart";
-import PieChart from "@/components/charts/PieChart";
+import TableCharts from "./TableCharts";
 
 export default {
   components: {
@@ -98,8 +82,7 @@ export default {
     QuickEdit,
     TableOptions,
     TableActions,
-    BarChart,
-    PieChart
+    TableCharts
   },
   props: ["defaultProps"],
   data() {
