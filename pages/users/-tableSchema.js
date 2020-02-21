@@ -39,7 +39,6 @@ schema.addColumn({
 schema.addColumn({
   name: "role",
   filterType: "select",
-
   filterOptions: [
     { text: "select user rol", value: "" },
     { text: "admin", value: 2 },
